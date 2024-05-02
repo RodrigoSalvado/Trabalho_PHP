@@ -9,21 +9,19 @@
 <body>
 <div class="container" id="container">
     <div class="form-container sign-up-container">
-        <form action="#">
+        <form action="criarConta.php" method="post">
             <h1>Create Account</h1>
 
-
-            <input type="text" placeholder="Username" />
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Password" />
+            <input type="text" placeholder="Username" name="user"/>
+            <input type="email" placeholder="Email" name="email"/>
+            <input type="password" placeholder="Password" name="pass"/>
             <br>
-            <button>Sign Up</button>
+            <button type="submit" name="submit">Sign Up</button>
         </form>
     </div>
     <div class="form-container sign-in-container">
-        <form action="#">
+        <form action="verificarLogin.php" method="post">
             <h1>Sign in</h1>
-
 
             <input type="email" placeholder="Username" />
             <input type="password" placeholder="Password" />
