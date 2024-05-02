@@ -7,10 +7,11 @@ if(isset($_POST["user"]) && isset($_POST["pass"])){
     $utilizador = $_POST["user"];
     $password = $_POST["pass"];
     include './basedados/basedados.h';
+    include 'ConstUtilizadores.php';
 
     //==================================================================//
     //Selecionar user correspondente da base de dados
-    $sql = "SELECT * FROM utilizador WHERE nomeUtilizador = '$utilizador' AND password = '".md5($password)."' /*AND tipoUtilizador != ".CLIENTE_APAGADO."*/;";
+    $sql = "SELECT * FROM utilizador WHERE nomeUtilizador = '$utilizador' AND password = '".md5($password)."' AND tipoUtilizador != ".APAGADO.";";
     $retval = mysqli_query( $conn, $sql );
     if(! $retval ){
         die('Could not get data: ' . mysqli_error($conn));// se não funcionar dá erro
