@@ -4,7 +4,7 @@ session_start();
 if(!isset($_SESSION["user"]) || !isset($_SESSION["tipo"])){
     $_SESSION["bt"] = "Página Login";
     $_SESSION["erro"] = "Algo não correu bem!!! Dirija-se para a Página de Login ou Registe-se";
-    $_SESSION["dir"] = "./PgLogin.php";
+    $_SESSION["dir"] = "./login.html";
     echo "<script>  setTimeout(function () { window.location.href = './Msg_erro.php'; }, 0000)</script>";
 
 }else{
