@@ -1,7 +1,7 @@
 <?php
 	define("USER_BD","root");
 	define("PASS_BD","");
-	define("NOME_BD","ficha5");
+	define("NOME_BD","trabalhoLPI");
 	$hostname_conn = "localhost";
 	
 	// Conectamos ao nosso servidor MySQL
@@ -16,5 +16,7 @@
 	   echo "Erro ao selecionar ao MySQL.";
 	   exit;
 	}
+
+	echo "Ligação à bd com sucesso<hr>";
 
 ?>
