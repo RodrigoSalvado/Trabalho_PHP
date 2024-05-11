@@ -32,6 +32,6 @@ if(isset($_POST["user"]) && isset($_POST["pass"])){
     echo "<div id='loading'>Loading...</div><script> setTimeout(function () { window.location.href = './secreta.php'; }, 1000)</script>";
 }else{
     session_destroy();
-    header("refresh:0;url = ./paginaPrincipal.html");
+    header("refresh:0;url = ./paginaPrincipal.php");
 
 }

@@ -7,7 +7,7 @@
         }
 
         #erro-box{
-            background-color:#F78181;
+            background-color:#00bbf0;
             width:380px;
             height:200px;
             margin: 140px auto 0px;
@@ -16,8 +16,8 @@
         }
 
         #erro-cabecalho{
-            background-color:red;
-            height:50x;
+            background-color:#0f054c;
+            height:50px;
             border-bottom:2px solid #BDBDBD;
             text-align:center;
             font: bold 20px/50px sans-serif;
@@ -57,7 +57,7 @@
 
         input[type=submit]{
             float:right;
-            background-color:red;
+            background-color:#0f054c;
             padding: 10px 50px;
             margin-top:-15px;
             font: bold 13px sans-serif;
@@ -100,7 +100,7 @@ echo "
 		<form action='".$dir."'>
 			<div id='acoes'>
 				<input type='submit' value ='".$btn."'>
-				<div id = 'registo'><a href='./novo_registo.php'>Registe-se...</a></div>
+				<div id = 'registo'><a href='./login.html'>Registe-se...</a></div>
 			</div>
 		</form>";
 
