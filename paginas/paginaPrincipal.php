@@ -1,6 +1,7 @@
 <?php
 
 include "../basedados/basedados.h";
+global $conn;
 
 session_start();
 
@@ -12,6 +13,25 @@ if(isset($_SESSION["user"])){
     $sessaoIniciada = false;
     echo "nao iniciou sessao";
 }
+
+//selecionar tipo de utilizador
+$sql = "SELECT tipo_utilizador FROM utilizador WHERE username = '$user'";
+$result = mysqli_query($conn, $sql);
+
+if($result){
+    if(mysqli_num_rows($result) > 0){
+        $row = mysqli_fetch_assoc($result);
+        $tipoUser = $row['tipo_utilizador'];
+    }else{
+        echo "nao foram encontrados dados";
+    }
+}else{
+    echo "erro";
+}
+
+echo "<br>" . $tipoUser;
+$_SESSION["tipo_user"] = $tipoUser;
+
 ?>
 
 <!DOCTYPE html>
@@ -64,7 +84,7 @@ if(isset($_SESSION["user"])){
     <header class="header_section">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="paginaPrincipal.html">
+          <a class="navbar-brand" href="paginaPrincipal.php">
             <span>
               Crypto Academy
             </span>
@@ -91,6 +111,17 @@ if(isset($_SESSION["user"])){
               <li class="nav-item">
                 <a class="nav-link" href="team.html">Team</a>
               </li>
+
+                <?php
+                    if($sessaoIniciada){
+                        echo '
+                                <li class="nav-item">
+                                    <a class="nav-link" href="perfil.php">Perfil</a>
+                                </li>
+                             ';
+                    }
+                ?>
+
               <li class="nav-item">
                   <?php
                     if($sessaoIniciada){
