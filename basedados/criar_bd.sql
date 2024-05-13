@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Tempo de geração: 02-Maio-2024 às 20:25
--- Versão do servidor: 10.4.32-MariaDB
--- versão do PHP: 8.2.12
+-- Host: localhost
+-- Tempo de geração: 13-Maio-2024 às 15:59
+-- Versão do servidor: 10.4.28-MariaDB
+-- versão do PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,11 +18,12 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `trabalholpi`
+-- Banco de dados: `TrabalhoLPI`
 --
 
     CREATE DATABASE TrabalhoLPI;
     USE TrabalhoLPI;
+
 -- --------------------------------------------------------
 
 --
@@ -31,7 +32,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `curso` (
                          `id_curso` int(11) NOT NULL,
-                         `nome` varchar(50) NOT NULL
+                         `docente` varchar(100) NOT NULL,
+                         `nome` varchar(50) NOT NULL,
+                         `descricao` text NOT NULL,
+                         `max_num` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -79,6 +83,17 @@ INSERT INTO `utilizador` (`id_utilizador`, `username`, `password`, `email`, `tip
                                                                                                    (2, 'docente', 'ac99fecf6fcb8c25d18788d14a5384ee', 'docente@docente.com', 3),
                                                                                                    (3, 'aluno', 'ca0cd09a12abade3bf0777574d9f987f', 'aluno@aluno.com', 2);
 
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `util_curso`
+--
+
+CREATE TABLE `util_curso` (
+                              `id_utilizador` int(11) NOT NULL,
+                              `curso` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Índices para tabelas despejadas
 --
@@ -102,6 +117,12 @@ ALTER TABLE `utilizador`
     ADD PRIMARY KEY (`id_utilizador`);
 
 --
+-- Índices para tabela `util_curso`
+--
+ALTER TABLE `util_curso`
+    ADD PRIMARY KEY (`id_utilizador`);
+
+--
 -- AUTO_INCREMENT de tabelas despejadas
 --
 
@@ -121,7 +142,7 @@ ALTER TABLE `tipo_utilizador`
 -- AUTO_INCREMENT de tabela `utilizador`
 --
 ALTER TABLE `utilizador`
-    MODIFY `id_utilizador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+    MODIFY `id_utilizador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
