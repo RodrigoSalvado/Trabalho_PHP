@@ -1,9 +1,20 @@
 <?php
+global $conn;
+include "../basedados/basedados.h";
 
-$nomeUtilizador = $_GET["IdUser"];
+$id = $_GET["id"];
+$validado = $_GET["validar"];
 
-$updateSql = "UPDATE utilizador SET tipoUtilizador = '2' WHERE nomeUtilizador = '".$nomeUtilizador."'";
-
-$updateRes = mysqli_query($conn, $updateSql);
-
-header("Location: PgGestUtilizadores.php");
+if($validado == 1){
+    echo "1";
+    /*
+    $sql = "UPDATE util_curso SET aceite = 1";
+    mysqli_query($conn, $sql);
+    */
+}else{
+    echo "0";
+    /*
+    $sql = "UPDATE util_curso SET aceite = 0";
+    mysqli_query($conn, $sql);
+    */
+}

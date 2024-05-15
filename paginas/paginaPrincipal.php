@@ -6,11 +6,9 @@ global $conn;
 session_start();
 
 if(isset($_SESSION["user"])){
-    $sessaoIniciada = true;
     $user = $_SESSION["user"];
     echo $user;
 }else{
-    $sessaoIniciada = false;
     echo "nao iniciou sessao";
 }
 
@@ -97,7 +95,7 @@ $_SESSION["tipo_user"] = $tipoUser;
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav  ">
               <li class="nav-item active">
-                <a class="nav-link" href="paginaPrincipal.html">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="paginaPrincipal.php">Home <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="about.html"> About</a>
@@ -113,7 +111,7 @@ $_SESSION["tipo_user"] = $tipoUser;
               </li>
 
                 <?php
-                    if($sessaoIniciada){
+                    if(isset($_SESSION["user"])){
                         echo '
                                 <li class="nav-item">
                                     <a class="nav-link" href="perfil.php">Perfil</a>
@@ -124,7 +122,7 @@ $_SESSION["tipo_user"] = $tipoUser;
 
               <li class="nav-item">
                   <?php
-                    if($sessaoIniciada){
+                    if(isset($_SESSION["user"])){
                         echo '<a class="nav-link" href="logout.php"> <i class="fa fa-user" aria-hidden="true"></i> Logout</a>';
                     }else{
                         echo '<a class="nav-link" href="login.html"> <i class="fa fa-user" aria-hidden="true"></i> Login</a>';

@@ -1,6 +1,7 @@
 <?php
 
 include "../basedados/basedados.h";
+include "./ConstUtilizadores.php";
 global $conn;
 
 session_start();
@@ -130,7 +131,7 @@ if($result){
 
             <?php
                 //adimn
-                if($tipoUser==4){
+                if($tipoUser== ADMINISTRADOR){
                     echo ' <div class="botoes">
                 <a href="paginaPrincipal.php">
                     <button>Gerir dados pessoais</button><br>
@@ -143,17 +144,17 @@ if($result){
                 </a>
             </div>';
                 //docente
-                }elseif ($tipoUser == 3){
+                }elseif ($tipoUser == DOCENTE){
                     echo ' <div class="botoes">
                 <a href="paginaPrincipal.php">
                     <button>Gerir dados pessoais</button><br>
                 </a>
-                <a href="paginaPrincipal.php">
+                <a href="gestaoInscricoes.php">
                     <button>Gerir inscrições</button><br>
                 </a>
             </div>';
                 //aluno
-                }elseif ($tipoUser == 2){
+                }elseif ($tipoUser == ALUNO){
                     echo ' <div class="botoes">
                 <a href="paginaPrincipal.php">
                     <button>Gerir dados pessoais</button><br>
@@ -290,3 +291,7 @@ if($result){
 </body>
 
 </html>
+
+<?php
+
+mysqli_close($conn);
