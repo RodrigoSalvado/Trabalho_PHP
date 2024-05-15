@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 13-Maio-2024 às 15:59
+-- Tempo de geração: 15-Maio-2024 às 11:49
 -- Versão do servidor: 10.4.28-MariaDB
 -- versão do PHP: 8.2.4
 
@@ -91,7 +91,8 @@ INSERT INTO `utilizador` (`id_utilizador`, `username`, `password`, `email`, `tip
 
 CREATE TABLE `util_curso` (
                               `id_utilizador` int(11) NOT NULL,
-                              `curso` varchar(100) NOT NULL
+                              `curso` varchar(100) NOT NULL,
+                              `aceite` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
