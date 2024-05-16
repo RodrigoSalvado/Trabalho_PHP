@@ -7,7 +7,17 @@ session_start();
 
 $user = $_SESSION["user"];
 
+$sqlId = "SELECT id_utilizador, tipo_utilizador FROM utilizador WHERE username = '$user'";
+$resultId = mysqli_query($conn, $sqlId);
 
+if(mysqli_num_rows($resultId)>0){
+    while($row = mysqli_fetch_assoc($resultId)){
+        $id = $row["id_utilizador"];
+        $tipoUtilizador = $row["tipo_utilizador"];
+    }
+}
+
+echo $user;
 
 
 ?>
@@ -120,64 +130,137 @@ $user = $_SESSION["user"];
         </h2>
         <div class="container">
             <table class="table table-primary table-sortable" role="grid">
-                <thead>
-                <tr>
-                    <th class="text-center header" scope="col" role="columnheader"><span>Curso</span></th>
-                    <th class="text-center header" scope="col" role="columnheader"><span>Utilizador</span></th>
-                    <th class="text-center header" scope="col" role="columnheader"><span>Aceitar</span></th>
-                    <th class="text-center header" scope="col" role="columnheader"><span>Recusar</span></th>
-                </tr>
-                </thead>
-                <tbody>
-                <div class="botoes_gest">
-
                     <?php
 
-                    $sqlId = "SELECT id_utilizador FROM utilizador WHERE username = '$user'";
-                    $resultId = mysqli_query($conn, $sqlId);
+                    switch($tipoUtilizador){
+                        case ADMINISTRADOR:
+                            echo '
+                            <thead>
+                                <tr>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Curso</span></th>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Utilizador</span></th>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Aceitar</span></th>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Recusar</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <div class="botoes_gest">';
 
-                    if(mysqli_num_rows($resultId)>0){
-                        while($row = mysqli_fetch_assoc($resultId)){
-                            $id = $row["id_utilizador"];
-                        }
+                            $sql = "SELECT u.username, uc.id_utilizador, uc.curso
+                                    FROM utilizador u
+                                    JOIN util_curso uc ON u.id_utilizador = uc.id_utilizador
+                                    WHERE uc.aceite = 0;";
+                            $result = mysqli_query($conn, $sql);
+
+                            if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    $curso = $row["curso"];
+                                    $id_aluno = $row["id_utilizador"];
+                                    $username = $row["username"];
+
+
+                                    echo "
+                                    <tr>
+                                      <td class='text-center'>$curso</td>
+                                      <td class='text-center'>$username</td>
+                                      <td class='text-center'><a href='validarAluno.php?id=" . $id_aluno . "&validar=1'><button>Aceitar</button></a></td>
+                                      <td class='text-center'><a href='validarAluno.php?id=" . $id_aluno . "'><button>Recusar</button></a></td>
+                                   </tr>";
+                                }
+                            }
+
+                            break;
+
+                        case DOCENTE:
+
+                            echo '
+                            <thead>
+                                <tr>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Curso</span></th>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Utilizador</span></th>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Aceitar</span></th>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Recusar</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <div class="botoes_gest">';
+
+                            $sql = "SELECT id_utilizador 
+                                    FROM util_curso 
+                                    WHERE curso IN (SELECT curso FROM curso WHERE docente = $user) 
+                                    AND aceite = 0;";
+                            $result = mysqli_query($conn, $sql);
+
+                            if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    $curso = $row["curso"];
+                                    $id_aluno = $row["id_utilizador"];
+
+                                    $sqlAluno = "SELECT username FROM utilizador WHERE id_utilizador = $id_aluno";
+                                    $resultAluno = mysqli_query($conn, $sqlAluno);
+
+                                    if(mysqli_num_rows($resultAluno)>0){
+                                        while($rowUser = mysqli_fetch_assoc($resultAluno)){
+                                            $username = $rowUser["username"];
+
+                                            echo "
+                                                <tr>
+                                                    <td class='text-center'>$curso</td>
+                                                    <td class='text-center'>$username</td>
+                                                    <td class='text-center'><a href='validarAluno.php?id=" . $id_aluno . "&validar=1'><button>Aceitar</button></a></td>
+                                                    <td class='text-center'><a href='validarAluno.php?id=" . $id_aluno . "'><button>Recusar</button></a></td>
+                                                </tr>";
+                                        }
+                                    }
+
+                                }
+                            }
+
+
+                            break;
+
+                        case ALUNO:
+
+                            echo '
+                            <thead>
+                                <tr>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Curso</span></th>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Desistir</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <div class="botoes_gest">';
+
+                            $sql = "SELECT uc.curso
+                                    FROM util_curso uc
+                                    JOIN utilizador u ON uc.id_utilizador = u.id_utilizador
+                                    WHERE u.username = '$user'
+                                    AND u.id_utilizador = '$id';";
+
+                            $result = mysqli_query($conn, $sql);
+
+                            if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                  $curso = $row["curso"];
+
+                                    echo "
+                                        <tr>
+                                            <td class='text-center'>$curso</td>
+                                            <td class='text-center'><a href='validarAluno.php?id=" . $id . "'><button>Desistir</button></a></td>
+                                        </tr>";
+                                }
+                            }
+
+                            break;
+
+                        default:
+                            echo "Inicie Sessão";
                     }
 
 
-                    $sqlCurso = "SELECT curso FROM util_curso WHERE id_utilizador = '$id'";
-                    $resultCurso = mysqli_query($conn, $sqlCurso);
-
-                    if(mysqli_num_rows($resultCurso)>0){
-                        while($row = mysqli_fetch_assoc($resultCurso)){
-                            $curso = $row["curso"];
-                        }
-                    }
-
-                    $sqlAlunos = "SELECT u.id_utilizador, u.username
-                                  FROM utilizador u
-                                  JOIN util_curso uc ON u.id_utilizador = uc.id_utilizador
-                                  WHERE uc.curso = '$curso'
-                                  AND u.tipo_utilizador = '.ALUNO.'";
-
-                    $resultAlunos = mysqli_query($conn, $sqlAlunos);
-
-                    if(mysqli_num_rows($resultAlunos)>0){
-                        while($row = mysqli_fetch_assoc($resultAlunos)){
-                            $username = $row["username"];
-                            $id_aluno = $row["id_utilizador"];
-                        }
-                    }
 
 
 
-                                echo "
-                 <tr>
-                      <td class='text-center'>$curso</td>
-                      <td class='text-center'>$username</td>
-                      <td class='text-center'><a href='validarAluno.php?id=".$id_aluno."&validar=1'><button>Aceitar</button></a></td>
-                      <td class='text-center'><a href='validarAluno.php?id=".$id_aluno."'><button>Recusar</button></a></td>
-                      
-                 </tr>
-                 ";
 
                     ?>
 
