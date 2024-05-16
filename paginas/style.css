@@ -1028,3 +1028,34 @@ a:focus {
 .container{
   margin-top: 5%;
 }
+
+
+/*-----------inscricaoCurso-------------*/
+.container-inscricao{
+  background: linear-gradient(130deg, #00bbf0, #1b49f6);
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  margin: 100px auto;
+  box-shadow: 0 0 10px rgba(0, 187, 240, 0.6);
+}
+.informacoes{
+  margin: 10px;
+  text-align: center;
+  width: 100%;
+  font-size: 20px;
+}
+.informacoes h3{
+  padding: 10px;
+  color: white;
+  position: relative;
+  font-weight: bold;
+  font-size: 40px;
+}
+.informacoes input{
+  background: linear-gradient(130deg, #231a6f, #0f054c);
+  border: none;
+  color: white;
+  width: 50%;
+  height: 10vh;
+}

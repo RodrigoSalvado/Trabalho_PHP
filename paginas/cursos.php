@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -13,7 +17,7 @@
   <meta name="author" content="" />
   <link rel="shortcut icon" href="favicon.png" type="">
 
-  <title> Finexo </title>
+  <title> Crypto Academy </title>
 
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="bootstrap.css" />
@@ -44,51 +48,68 @@
       </div>
     </div>
 
-    <!-- header section strats -->
-    <header class="header_section">
-      <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="paginaPrincipal.php">
+      <!-- header section strats -->
+      <header class="header_section">
+          <div class="container-fluid">
+              <nav class="navbar navbar-expand-lg custom_nav-container ">
+                  <a class="navbar-brand" href="paginaPrincipal.php">
             <span>
-              Finexo
+              Crypto Academy
             </span>
-          </a>
+                  </a>
 
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class=""> </span>
-          </button>
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class=""> </span>
+                  </button>
 
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav  ">
-              <li class="nav-item ">
-                <a class="nav-link" href="paginaPrincipal.php">Home </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="about.html"> About</a>
-              </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="service.html">Services <span class="sr-only">(current)</span> </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="why.html">Why Us</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="team.html">Team</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#"> <i class="fa fa-user" aria-hidden="true"></i> Login</a>
-              </li>
-              <form class="form-inline">
-                <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
-                  <i class="fa fa-search" aria-hidden="true"></i>
-                </button>
-              </form>
-            </ul>
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                      <ul class="navbar-nav  ">
+                          <li class="nav-item active">
+                              <a class="nav-link" href="paginaPrincipal.php">Home <span class="sr-only">(current)</span></a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="about.html"> About</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="cursos.php">Cursos</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="why.html">Why Us</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="team.html">Team</a>
+                          </li>
+
+                          <?php
+                          if(isset($_SESSION["user"])){
+                              echo '
+                                <li class="nav-item">
+                                    <a class="nav-link" href="perfil.php">Perfil</a>
+                                </li>
+                             ';
+                          }
+                          ?>
+
+                          <li class="nav-item">
+                              <?php
+                              if(isset($_SESSION["user"])){
+                                  echo '<a class="nav-link" href="logout.php"> <i class="fa fa-user" aria-hidden="true"></i> Logout</a>';
+                              }else{
+                                  echo '<a class="nav-link" href="login.html"> <i class="fa fa-user" aria-hidden="true"></i> Login</a>';
+                              }
+                              ?>
+                          </li>
+                          <form class="form-inline">
+                              <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
+                                  <i class="fa fa-search" aria-hidden="true"></i>
+                              </button>
+                          </form>
+                      </ul>
+                  </div>
+              </nav>
           </div>
-        </nav>
-      </div>
-    </header>
-    <!-- end header section -->
+      </header>
+      <!-- end header section -->
   </div>
 
 
@@ -99,10 +120,9 @@
       <div class="container ">
         <div class="heading_container heading_center">
           <h2>
-            Our <span>Services</span>
+            Os nossos <span>Cursos</span>
           </h2>
           <p>
-            There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
           </p>
         </div>
         <div class="row">
@@ -120,9 +140,20 @@
                   The
                   point of using
                 </p>
-                <a href="">
-                  Read More
-                </a>
+
+                <?php
+                    if(isset($_SESSION["user"])){
+                        echo '<a href="inscricaoCurso.php">
+                Inscreva-se!
+                </a>';
+                }else{
+                echo '<a href="login.html">
+                Inicie sessão para se increver no nosso curso!
+              </a>';
+                }
+                ?>
+
+
               </div>
             </div>
           </div>
@@ -140,9 +171,17 @@
                   The
                   point of using
                 </p>
-                <a href="">
-                  Read More
-                </a>
+                <?php
+                  if(isset($_SESSION["user"])){
+                      echo '<a href="inscricaoCurso.php">
+                Inscreva-se!
+                </a>';
+                }else{
+                echo '<a href="login.html">
+                Inicie sessão para se increver no nosso curso!
+              </a>';
+                }
+                ?>
               </div>
             </div>
           </div>
@@ -160,18 +199,108 @@
                   The
                   point of using
                 </p>
-                <a href="">
-                  Read More
-                </a>
+                <?php
+                  if(isset($_SESSION["user"])){
+                      echo '<a href="inscricaoCurso.php">
+                Inscreva-se!
+                </a>';
+                }else{
+                echo '<a href="login.html">
+                Inicie sessão para se increver no nosso curso!
+              </a>';
+                }
+                ?>
               </div>
             </div>
           </div>
         </div>
-        <div class="btn-box">
-          <a href="">
-            View All
-          </a>
+        <div class="row">
+          <div class="col-md-4 ">
+            <div class="box ">
+              <div class="img-box">
+                <img src="s1.png" alt="">
+              </div>
+              <div class="detail-box">
+                <h5>
+                  Currency Wallet
+                </h5>
+                <p>
+                  fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                  The
+                  point of using
+                </p>
+                <?php
+                          if(isset($_SESSION["user"])){
+                              echo '<a href="inscricaoCurso.php">
+                Inscreva-se!
+                </a>';
+                }else{
+                echo '<a href="login.html">
+                Inicie sessão para se increver no nosso curso!
+              </a>';
+                }
+                ?>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 ">
+            <div class="box ">
+              <div class="img-box">
+                <img src="s2.png" alt="">
+              </div>
+              <div class="detail-box">
+                <h5>
+                  Security Storage
+                </h5>
+                <p>
+                  fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                  The
+                  point of using
+                </p>
+                <?php
+                          if(isset($_SESSION["user"])){
+                              echo '<a href="inscricaoCurso.php">
+                Inscreva-se!
+                </a>';
+                }else{
+                echo '<a href="login.html">
+                Inicie sessão para se increver no nosso curso!
+              </a>';
+                }
+                ?>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 ">
+            <div class="box ">
+              <div class="img-box">
+                <img src="s3.png" alt="">
+              </div>
+              <div class="detail-box">
+                <h5>
+                  Expert Support
+                </h5>
+                <p>
+                  fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                  The
+                  point of using
+                </p>
+                <?php
+                          if(isset($_SESSION["user"])){
+                              echo '<a href="inscricaoCurso.php">
+                Inscreva-se!
+                </a>';
+                }else{
+                echo '<a href="login.html">
+                Inicie sessão para se increver no nosso curso!
+              </a>';
+                }
+                ?>
+              </div>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
   </section>
@@ -246,7 +375,7 @@
               <a class="" href="about.html">
                 About
               </a>
-              <a class="" href="service.html">
+              <a class="" href="cursos.html">
                 Services
               </a>
               <a class="" href="why.html">

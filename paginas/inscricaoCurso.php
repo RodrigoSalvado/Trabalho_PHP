@@ -1,27 +1,3 @@
-<?php
-
-include "../basedados/basedados.h";
-include "./ConstUtilizadores.php";
-global $conn;
-
-session_start();
-
-$tipoUser = $_SESSION["tipo_user"];
-
-echo $_SESSION["user"] . "<br>";
-echo $tipoUser;
-
-$sql = "SELECT cargo FROM tipo_utilizador WHERE id = '$tipoUser'";
-$result = mysqli_query($conn, $sql);
-
-if($result){
-    if(mysqli_num_rows($result) > 0){
-        $row = mysqli_fetch_assoc($result);
-        $cargo = $row["cargo"];
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html>
 
@@ -90,22 +66,18 @@ if($result){
                         <li class="nav-item">
                             <a class="nav-link" href="about.html"> About</a>
                         </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="cursos.php">Services  </a>
-                        </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="why.html">Why Us</a>
+                            <a class="nav-link" href="cursos.php">Services</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="why.html">Why Us <span class="sr-only">(current)</span> </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="team.html">Team</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="perfil.php">Perfil</a>
+                            <a class="nav-link" href="#"> <i class="fa fa-user" aria-hidden="true"></i> Login</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="logout.php"> <i class="fa fa-user" aria-hidden="true"></i> Logout</a>
-                        </li>
-
                         <form class="form-inline">
                             <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
                                 <i class="fa fa-search" aria-hidden="true"></i>
@@ -119,58 +91,25 @@ if($result){
     <!-- end header section -->
 </div>
 
+<div class="container-inscricao">
+    <div class="informacoes">
+        <form action="">
+            <br>
+            <h3>Solicitar inscrição no curso de <br><span style="color: #0F054CFF;">(nome do curso)</span></h3>
+            <br><br>
+            <div>
+                <p>Ao realizar este questionário informa que pretende <br> realizar a inscriçao no curso de (nome do curso)<br>E irá usufruir do mesmo de forma séria e assídua.<br>As vagas são altamente limitadas!</p>
+                <label>Docente: (nome do docente)</label><br>
+                <label>Número de vagas no curso: (x/10)</label>
+            </div>
 
-<!-- service section -->
+            <br> <br><br>
+            <input type="submit" value="Solicitar inscrição" name="botao">
+            <br><br>
+        </form>
 
-
-    <div class="heading_container heading_center" style="margin-top: 80px">
-        <h2>
-            Perfil <span><?php echo $cargo?></span>
-        </h2>
-        <div class="area">
-
-            <?php
-                //adimn
-                if($tipoUser== ADMINISTRADOR){
-                    echo ' <div class="botoes">
-                <a href="paginaPrincipal.php">
-                    <button>Gerir dados pessoais</button><br>
-                </a>
-                <a href="paginaPrincipal.php">
-                    <button>Gerir utilizadores</button><br>
-                </a>
-                <a href="gestaoInscricoes.php">
-                    <button>Gerir inscrições</button><br>
-                </a>
-            </div>';
-                //docente
-                }elseif ($tipoUser == DOCENTE){
-                    echo ' <div class="botoes">
-                <a href="paginaPrincipal.php">
-                    <button>Gerir dados pessoais</button><br>
-                </a>
-                <a href="gestaoInscricoes.php">
-                    <button>Gerir inscrições</button><br>
-                </a>
-            </div>';
-                //aluno
-                }elseif ($tipoUser == ALUNO){
-                    echo ' <div class="botoes">
-                <a href="paginaPrincipal.php">
-                    <button>Gerir dados pessoais</button><br>
-                </a>
-                <a href="gestaoInscricoes.php">
-                    <button>Gerir cursos inscrito</button><br>
-                </a>
-            </div>';
-                }
-            ?>
-
-        </div>
     </div>
-
-
-<!-- end service section -->
+</div>
 
 <!-- info section -->
 
@@ -270,7 +209,6 @@ if($result){
 <!-- end info section -->
 
 
-
 <!-- jQery -->
 <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
 <!-- popper js -->
@@ -291,7 +229,3 @@ if($result){
 </body>
 
 </html>
-
-<?php
-
-mysqli_close($conn);

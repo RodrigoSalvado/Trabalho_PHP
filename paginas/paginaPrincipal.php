@@ -101,7 +101,7 @@ $_SESSION["tipo_user"] = $tipoUser;
                 <a class="nav-link" href="about.html"> About</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="service.html">Services</a>
+                <a class="nav-link" href="cursos.php">Cursos</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="why.html">Why Us</a>
@@ -158,8 +158,14 @@ $_SESSION["tipo_user"] = $tipoUser;
                     <br>Registe-se no nosso site e venha aprender connosco!
                   </p>
                   <div class="btn-box">
-                    <a href="login.html" class="btn1">
+
+                      <?php
+                        if(empty($_SESSION["user"])){
+                            echo '<a href="login.html" class="btn1">
                       Registe-se!
+                    </a>';
+                        }
+                      ?>
                     </a>
                   </div>
                 </div>
@@ -246,10 +252,9 @@ $_SESSION["tipo_user"] = $tipoUser;
       <div class="container ">
         <div class="heading_container heading_center">
           <h2>
-            Our <span>Services</span>
+            Os nossos <span>Cursos</span>
           </h2>
           <p>
-            There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
           </p>
         </div>
         <div class="row">
@@ -267,9 +272,20 @@ $_SESSION["tipo_user"] = $tipoUser;
                   The
                   point of using
                 </p>
-                <a href="">
-                  Read More
-                </a>
+
+                  <?php
+                    if(isset($_SESSION["user"])){
+                        echo '<a href="">
+                  Inscreva-se!
+                </a>';
+                  }else{
+                        echo '<a href="login.html">
+                  Inicie sessão para se increver no nosso curso!
+                </a>';
+                  }
+                  ?>
+
+
               </div>
             </div>
           </div>
@@ -287,9 +303,17 @@ $_SESSION["tipo_user"] = $tipoUser;
                   The
                   point of using
                 </p>
-                <a href="">
-                  Read More
-                </a>
+                  <?php
+                  if(isset($_SESSION["user"])){
+                      echo '<a href="">
+                  Inscreva-se!
+                </a>';
+                  }else{
+                      echo '<a href="login.html">
+                  Inicie sessão para se increver no nosso curso!
+                </a>';
+                  }
+                  ?>
               </div>
             </div>
           </div>
@@ -307,18 +331,108 @@ $_SESSION["tipo_user"] = $tipoUser;
                   The
                   point of using
                 </p>
-                <a href="">
-                  Read More
-                </a>
+                  <?php
+                  if(isset($_SESSION["user"])){
+                      echo '<a href="">
+                  Inscreva-se!
+                </a>';
+                  }else{
+                      echo '<a href="login.html">
+                  Inicie sessão para se increver no nosso curso!
+                </a>';
+                  }
+                  ?>
               </div>
             </div>
           </div>
         </div>
-        <div class="btn-box">
-          <a href="">
-            View All
-          </a>
-        </div>
+          <div class="row">
+              <div class="col-md-4 ">
+                  <div class="box ">
+                      <div class="img-box">
+                          <img src="s1.png" alt="">
+                      </div>
+                      <div class="detail-box">
+                          <h5>
+                              Currency Wallet
+                          </h5>
+                          <p>
+                              fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                              The
+                              point of using
+                          </p>
+                          <?php
+                          if(isset($_SESSION["user"])){
+                              echo '<a href="">
+                  Inscreva-se!
+                </a>';
+                          }else{
+                              echo '<a href="login.html">
+                  Inicie sessão para se increver no nosso curso!
+                </a>';
+                          }
+                          ?>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-4 ">
+                  <div class="box ">
+                      <div class="img-box">
+                          <img src="s2.png" alt="">
+                      </div>
+                      <div class="detail-box">
+                          <h5>
+                              Security Storage
+                          </h5>
+                          <p>
+                              fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                              The
+                              point of using
+                          </p>
+                          <?php
+                          if(isset($_SESSION["user"])){
+                              echo '<a href="">
+                  Inscreva-se!
+                </a>';
+                          }else{
+                              echo '<a href="login.html">
+                  Inicie sessão para se increver no nosso curso!
+                </a>';
+                          }
+                          ?>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-4 ">
+                  <div class="box ">
+                      <div class="img-box">
+                          <img src="s3.png" alt="">
+                      </div>
+                      <div class="detail-box">
+                          <h5>
+                              Expert Support
+                          </h5>
+                          <p>
+                              fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                              The
+                              point of using
+                          </p>
+                          <?php
+                          if(isset($_SESSION["user"])){
+                              echo '<a href="">
+                  Inscreva-se!
+                </a>';
+                          }else{
+                              echo '<a href="login.html">
+                  Inicie sessão para se increver no nosso curso!
+                </a>';
+                          }
+                          ?>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
       </div>
     </div>
   </section>
@@ -592,109 +706,7 @@ $_SESSION["tipo_user"] = $tipoUser;
   <!-- end team section -->
 
 
-  <!-- client section -->
 
-  <section class="client_section layout_padding">
-    <div class="container">
-      <div class="heading_container heading_center psudo_white_primary mb_45">
-        <h2>
-          What says our <span>Customers</span>
-        </h2>
-      </div>
-      <div class="carousel-wrap ">
-        <div class="owl-carousel client_owl-carousel">
-          <div class="item">
-            <div class="box">
-              <div class="img-box">
-                <img src="client1.jpg" alt="" class="box-img">
-              </div>
-              <div class="detail-box">
-                <div class="client_id">
-                  <div class="client_info">
-                    <h6>
-                      LusDen
-                    </h6>
-                    <p>
-                      magna aliqua. Ut
-                    </p>
-                  </div>
-                  <i class="fa fa-quote-left" aria-hidden="true"></i>
-                </div>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis </p>
-              </div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="box">
-              <div class="img-box">
-                <img src="client2.jpg" alt="" class="box-img">
-              </div>
-              <div class="detail-box">
-                <div class="client_id">
-                  <div class="client_info">
-                    <h6>
-                      Zen Court
-                    </h6>
-                    <p>
-                      magna aliqua. Ut
-                    </p>
-                  </div>
-                  <i class="fa fa-quote-left" aria-hidden="true"></i>
-                </div>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis </p>
-              </div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="box">
-              <div class="img-box">
-                <img src="client1.jpg" alt="" class="box-img">
-              </div>
-              <div class="detail-box">
-                <div class="client_id">
-                  <div class="client_info">
-                    <h6>
-                      LusDen
-                    </h6>
-                    <p>
-                      magna aliqua. Ut
-                    </p>
-                  </div>
-                  <i class="fa fa-quote-left" aria-hidden="true"></i>
-                </div>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis </p>
-              </div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="box">
-              <div class="img-box">
-                <img src="client2.jpg" alt="" class="box-img">
-              </div>
-              <div class="detail-box">
-                <div class="client_id">
-                  <div class="client_info">
-                    <h6>
-                      Zen Court
-                    </h6>
-                    <p>
-                      magna aliqua. Ut
-                    </p>
-                  </div>
-                  <i class="fa fa-quote-left" aria-hidden="true"></i>
-                </div>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- end client section -->
 
@@ -767,7 +779,7 @@ $_SESSION["tipo_user"] = $tipoUser;
               <a class="" href="about.html">
                 About
               </a>
-              <a class="" href="service.html">
+              <a class="" href="cursos.php">
                 Services
               </a>
               <a class="" href="why.html">

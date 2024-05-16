@@ -92,7 +92,7 @@ echo $user;
                                 <a class="nav-link" href="about.html"> About</a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="service.html">Services  </a>
+                                <a class="nav-link" href="cursos.php">Services  </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="why.html">Why Us</a>
@@ -341,7 +341,7 @@ echo $user;
                             <a class="" href="about.html">
                                 About
                             </a>
-                            <a class="" href="service.html">
+                            <a class="" href="cursos.php">
                                 Services
                             </a>
                             <a class="" href="why.html">
