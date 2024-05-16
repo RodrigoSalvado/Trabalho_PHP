@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 16-Maio-2024 às 21:08
+-- Tempo de geração: 16-Maio-2024 às 23:56
 -- Versão do servidor: 10.4.28-MariaDB
 -- versão do PHP: 8.2.4
 
@@ -102,6 +102,7 @@ INSERT INTO `utilizador` (`id_utilizador`, `username`, `password`, `email`, `tip
 --
 
 CREATE TABLE `util_curso` (
+                              `id_inscricao` int(11) NOT NULL,
                               `id_utilizador` int(11) NOT NULL,
                               `curso` varchar(100) NOT NULL,
                               `aceite` int(11) NOT NULL
@@ -133,7 +134,7 @@ ALTER TABLE `utilizador`
 -- Índices para tabela `util_curso`
 --
 ALTER TABLE `util_curso`
-    ADD PRIMARY KEY (`id_utilizador`);
+    ADD PRIMARY KEY (`id_inscricao`);
 
 --
 -- AUTO_INCREMENT de tabelas despejadas
@@ -156,6 +157,12 @@ ALTER TABLE `tipo_utilizador`
 --
 ALTER TABLE `utilizador`
     MODIFY `id_utilizador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de tabela `util_curso`
+--
+ALTER TABLE `util_curso`
+    MODIFY `id_inscricao` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
