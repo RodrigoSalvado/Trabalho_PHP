@@ -30,6 +30,27 @@ if($result){
 echo "<br>" . $tipoUser;
 $_SESSION["tipo_user"] = $tipoUser;
 
+//informacoes dos cursos
+function obterDadosCursos($id_curso, $conn){
+    $sqlSelect = "SELECT * FROM curso WHERE id_curso = '$id_curso'";
+    $resultSelect = mysqli_query($conn, $sqlSelect);
+    if($resultSelect && mysqli_num_rows($resultSelect) > 0){
+        while($row1 = mysqli_fetch_assoc($resultSelect)){
+            return $row1;
+        }
+    }
+}
+
+$dados1 = obterDadosCursos(1, $conn);
+$dados2 = obterDadosCursos(2, $conn);
+$dados3 = obterDadosCursos(3, $conn);
+$dados4 = obterDadosCursos(4, $conn);
+$dados5 = obterDadosCursos(5, $conn);
+$dados6 = obterDadosCursos(6, $conn);
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -257,6 +278,8 @@ $_SESSION["tipo_user"] = $tipoUser;
           <p>
           </p>
         </div>
+
+
         <div class="row">
           <div class="col-md-4 ">
             <div class="box ">
@@ -264,18 +287,21 @@ $_SESSION["tipo_user"] = $tipoUser;
                 <img src="s1.png" alt="">
               </div>
               <div class="detail-box">
+
                 <h5>
-                  Currency Wallet
+                    <?php
+                    echo $dados1["nome"];
+                    ?>
                 </h5>
                 <p>
-                  fact that a reader will be distracted by the readable content of a page when looking at its layout.
-                  The
-                  point of using
+                    <?php
+                    echo $dados1["descricao"];
+                    ?>
                 </p>
 
                   <?php
                     if(isset($_SESSION["user"])){
-                        echo '<a href="">
+                        echo '<a href="inscricaoCurso.php?id=1">
                   Inscreva-se!
                 </a>';
                   }else{
@@ -284,11 +310,13 @@ $_SESSION["tipo_user"] = $tipoUser;
                 </a>';
                   }
                   ?>
-
-
               </div>
             </div>
           </div>
+
+
+
+
           <div class="col-md-4 ">
             <div class="box ">
               <div class="img-box">
@@ -296,16 +324,18 @@ $_SESSION["tipo_user"] = $tipoUser;
               </div>
               <div class="detail-box">
                 <h5>
-                  Security Storage
+                    <?php
+                    echo $dados2["nome"];
+                    ?>
                 </h5>
                 <p>
-                  fact that a reader will be distracted by the readable content of a page when looking at its layout.
-                  The
-                  point of using
+                    <?php
+                    echo $dados2["descricao"];
+                    ?>
                 </p>
                   <?php
                   if(isset($_SESSION["user"])){
-                      echo '<a href="">
+                      echo '<a href="inscricaoCurso.php?id=2">
                   Inscreva-se!
                 </a>';
                   }else{
@@ -317,6 +347,10 @@ $_SESSION["tipo_user"] = $tipoUser;
               </div>
             </div>
           </div>
+
+
+
+
           <div class="col-md-4 ">
             <div class="box ">
               <div class="img-box">
@@ -324,16 +358,18 @@ $_SESSION["tipo_user"] = $tipoUser;
               </div>
               <div class="detail-box">
                 <h5>
-                  Expert Support
+                    <?php
+                    echo $dados3["nome"];
+                    ?>
                 </h5>
                 <p>
-                  fact that a reader will be distracted by the readable content of a page when looking at its layout.
-                  The
-                  point of using
+                    <?php
+                    echo $dados3["descricao"];
+                    ?>
                 </p>
                   <?php
                   if(isset($_SESSION["user"])){
-                      echo '<a href="">
+                      echo '<a href="inscricaoCurso.php?id=3">
                   Inscreva-se!
                 </a>';
                   }else{
@@ -346,6 +382,8 @@ $_SESSION["tipo_user"] = $tipoUser;
             </div>
           </div>
         </div>
+
+
           <div class="row">
               <div class="col-md-4 ">
                   <div class="box ">
@@ -354,16 +392,18 @@ $_SESSION["tipo_user"] = $tipoUser;
                       </div>
                       <div class="detail-box">
                           <h5>
-                              Currency Wallet
+                              <?php
+                              echo $dados4["nome"];
+                              ?>
                           </h5>
                           <p>
-                              fact that a reader will be distracted by the readable content of a page when looking at its layout.
-                              The
-                              point of using
+                              <?php
+                              echo $dados4["descricao"];
+                              ?>
                           </p>
                           <?php
                           if(isset($_SESSION["user"])){
-                              echo '<a href="">
+                              echo '<a href="inscricaoCurso.php?id=4">
                   Inscreva-se!
                 </a>';
                           }else{
@@ -375,6 +415,9 @@ $_SESSION["tipo_user"] = $tipoUser;
                       </div>
                   </div>
               </div>
+
+
+
               <div class="col-md-4 ">
                   <div class="box ">
                       <div class="img-box">
@@ -382,16 +425,18 @@ $_SESSION["tipo_user"] = $tipoUser;
                       </div>
                       <div class="detail-box">
                           <h5>
-                              Security Storage
+                              <?php
+                              echo $dados5["nome"];
+                              ?>
                           </h5>
                           <p>
-                              fact that a reader will be distracted by the readable content of a page when looking at its layout.
-                              The
-                              point of using
+                              <?php
+                              echo $dados5["descricao"];
+                              ?>
                           </p>
                           <?php
                           if(isset($_SESSION["user"])){
-                              echo '<a href="">
+                              echo '<a href="inscricaoCurso.php?id=5">
                   Inscreva-se!
                 </a>';
                           }else{
@@ -403,6 +448,9 @@ $_SESSION["tipo_user"] = $tipoUser;
                       </div>
                   </div>
               </div>
+
+
+
               <div class="col-md-4 ">
                   <div class="box ">
                       <div class="img-box">
@@ -410,16 +458,18 @@ $_SESSION["tipo_user"] = $tipoUser;
                       </div>
                       <div class="detail-box">
                           <h5>
-                              Expert Support
+                              <?php
+                              echo $dados6["nome"];
+                              ?>
                           </h5>
                           <p>
-                              fact that a reader will be distracted by the readable content of a page when looking at its layout.
-                              The
-                              point of using
+                              <?php
+                              echo $dados6["descricao"];
+                              ?>
                           </p>
                           <?php
                           if(isset($_SESSION["user"])){
-                              echo '<a href="">
+                              echo '<a href="inscricaoCurso.php?id=6">
                   Inscreva-se!
                 </a>';
                           }else{

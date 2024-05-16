@@ -1,3 +1,23 @@
+<?php
+include "../basedados/basedados.h";
+global $conn;
+session_start();
+
+$id_curso = $_GET["id"];
+
+echo $id_curso;
+
+$sql = "SELECT docente, nome FROM curso WHERE id_curso = '$id_curso'";
+$result = mysqli_query($conn, $sql);
+if($result && mysqli_num_rows($result) > 0){
+    while($row = mysqli_fetch_assoc($result)){
+        $docente = $row["docente"];
+        $nome = $row["nome"];
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -93,14 +113,15 @@
 
 <div class="container-inscricao">
     <div class="informacoes">
-        <form action="">
+        <form action="inscrever.php" method="post">
+            <input type="hidden" name="nome" value="<?php echo htmlspecialchars($nome)?>">
             <br>
-            <h3>Solicitar inscrição no curso de <br><span style="color: #0F054CFF;">(nome do curso)</span></h3>
+            <h3>Solicitar inscrição no curso de <br><span style="color: #0F054CFF;"><?php echo $nome ?></span></h3>
             <br><br>
             <div>
                 <p>Ao realizar este questionário informa que pretende <br> realizar a inscriçao no curso de (nome do curso)<br>E irá usufruir do mesmo de forma séria e assídua.<br>As vagas são altamente limitadas!</p>
-                <label>Docente: (nome do docente)</label><br>
-                <label>Número de vagas no curso: (x/10)</label>
+                <label>Docente: <?php echo $docente ?></label><br>
+
             </div>
 
             <br> <br><br>
