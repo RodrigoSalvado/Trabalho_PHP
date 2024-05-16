@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 15-Maio-2024 às 11:49
+-- Tempo de geração: 16-Maio-2024 às 21:08
 -- Versão do servidor: 10.4.28-MariaDB
 -- versão do PHP: 8.2.4
 
@@ -35,8 +35,20 @@ CREATE TABLE `curso` (
                          `docente` varchar(100) NOT NULL,
                          `nome` varchar(50) NOT NULL,
                          `descricao` text NOT NULL,
-                         `max_num` int(10) NOT NULL
+                         `max_num` int(10) NOT NULL DEFAULT 10
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `curso`
+--
+
+INSERT INTO `curso` (`id_curso`, `docente`, `nome`, `descricao`, `max_num`) VALUES
+                                                                                (1, 'Windoh', 'Curso básico de investimentos em criptomoedas', 'Este curso aborda os conceitos basicos de investimentos em criptomoedas e é o curso ideal para iniciar a sua jornada no mundo das criptomoedas.', 10),
+                                                                                (2, 'Tiago Paiva', 'Análise técnica para investimentos em criptomoedas', 'Este curso explora tecnicas de analise avançadas aplicadas ao mercado de criptomoedas. Neste curso aprenderá a interpretar graficos, identificar tendencias entre outros conceitos.\r\n', 10),
+                                                                                (3, 'Gabriel Ferreira', 'Curso básico sobre ETFs', 'Este curso aborda os conceitos básicos sobre ETFs e é o curso ideal para iniciar a sua jornada no mundo dos investmentos.', 10),
+                                                                                (4, 'Bernardo Almeida', 'Curso básico sobre ações', 'Este curso aborda os conceitos básicos sobre investimentos em ações e sobre o mercado financeiro e é o curso ideal para iniciar a sua jornada no mundo das ações.', 10),
+                                                                                (5, 'RicFazeres', 'Fundamentos de blockchain e criptomoedas', 'Este cruso oferece uma introdução abrangente aos fundamentos da tecnologia blockchain e o seu papel nas criptomoedas.', 10),
+                                                                                (6, 'Numeiro', 'Gestão de risco em investimentos de criptomoedas', 'Este curso centra-se na gestão eficaz de riscos ao investir me criptomoedas. Aqui os alunos podem aprender controlo de perdas, analise de riscos/recompensa e muito mais.', 10);
 
 -- --------------------------------------------------------
 
@@ -131,7 +143,7 @@ ALTER TABLE `util_curso`
 -- AUTO_INCREMENT de tabela `curso`
 --
 ALTER TABLE `curso`
-    MODIFY `id_curso` int(11) NOT NULL AUTO_INCREMENT;
+    MODIFY `id_curso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `tipo_utilizador`
