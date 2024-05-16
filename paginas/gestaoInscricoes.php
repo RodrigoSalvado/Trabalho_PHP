@@ -246,7 +246,7 @@ echo $user;
                                     echo "
                                         <tr>
                                             <td class='text-center'>$curso</td>
-                                            <td class='text-center'><a href='validarInscricao.php?id=" . $id . "'><button>Desistir</button></a></td>
+                                            <td class='text-center'><a href='validarInscricao.php?id=" . $id . "&curso=".$curso."><button>Desistir</button></a></td>
                                         </tr>";
                                 }
                             }
