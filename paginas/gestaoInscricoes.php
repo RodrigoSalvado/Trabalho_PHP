@@ -163,8 +163,8 @@ echo $user;
                                     <tr>
                                       <td class='text-center'>$curso</td>
                                       <td class='text-center'>$username</td>
-                                      <td class='text-center'><a href='validarAluno.php?id=" . $id_aluno . "&validar=1'><button>Aceitar</button></a></td>
-                                      <td class='text-center'><a href='validarAluno.php?id=" . $id_aluno . "'><button>Recusar</button></a></td>
+                                      <td class='text-center'><a href='validarInscricao.php?id=" . $id_aluno . "&validar=1'><button>Aceitar</button></a></td>
+                                      <td class='text-center'><a href='validarInscricao.php?id=" . $id_aluno . "'><button>Recusar</button></a></td>
                                    </tr>";
                                 }
                             }
@@ -207,8 +207,8 @@ echo $user;
                                                 <tr>
                                                     <td class='text-center'>$curso</td>
                                                     <td class='text-center'>$username</td>
-                                                    <td class='text-center'><a href='validarAluno.php?id=" . $id_aluno . "&validar=1'><button>Aceitar</button></a></td>
-                                                    <td class='text-center'><a href='validarAluno.php?id=" . $id_aluno . "'><button>Recusar</button></a></td>
+                                                    <td class='text-center'><a href='validarInscricao.php?id=" . $id_aluno . "&validar=1'><button>Aceitar</button></a></td>
+                                                    <td class='text-center'><a href='validarInscricao.php?id=" . $id_aluno . "'><button>Recusar</button></a></td>
                                                 </tr>";
                                         }
                                     }
@@ -246,7 +246,7 @@ echo $user;
                                     echo "
                                         <tr>
                                             <td class='text-center'>$curso</td>
-                                            <td class='text-center'><a href='validarAluno.php?id=" . $id . "'><button>Desistir</button></a></td>
+                                            <td class='text-center'><a href='validarInscricao.php?id=" . $id . "'><button>Desistir</button></a></td>
                                         </tr>";
                                 }
                             }
