@@ -1,26 +1,22 @@
 <?php
-
 include "../basedados/basedados.h";
-include "./ConstUtilizadores.php";
 global $conn;
-
 session_start();
 
-$tipoUser = $_SESSION["tipo_user"];
+$username = $_SESSION["user"];
+echo $username;
 
-echo $_SESSION["user"] . "<br>";
-echo $tipoUser;
-
-$sql = "SELECT cargo FROM tipo_utilizador WHERE id = '$tipoUser'";
+$sql = "SELECT email, password FROM utilizador WHERE username = '$username'";
 $result = mysqli_query($conn, $sql);
 
-if($result){
-    if(mysqli_num_rows($result) > 0){
-        $row = mysqli_fetch_assoc($result);
-        $cargo = $row["cargo"];
+if($result && mysqli_num_rows($result) > 0){
+    while($row = mysqli_fetch_assoc($result)){
+        $email = $row["email"];
+        $password = $row["password"];
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -37,7 +33,7 @@ if($result){
     <meta name="author" content="" />
     <link rel="shortcut icon" href="favicon.png" type="">
 
-    <title> Finexo </title>
+    <title> Crypto Academy </title>
 
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="bootstrap.css" />
@@ -74,7 +70,7 @@ if($result){
             <nav class="navbar navbar-expand-lg custom_nav-container ">
                 <a class="navbar-brand" href="paginaPrincipal.php">
             <span>
-              Finexo
+              Crypto Academy
             </span>
                 </a>
 
@@ -90,22 +86,18 @@ if($result){
                         <li class="nav-item">
                             <a class="nav-link" href="about.html"> About</a>
                         </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="cursos.php">Services  </a>
-                        </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="why.html">Why Us</a>
+                            <a class="nav-link" href="cursos.php">Services</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="why.html">Why Us <span class="sr-only">(current)</span> </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="team.html">Team</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="perfil.php">Perfil</a>
+                            <a class="nav-link" href="#"> <i class="fa fa-user" aria-hidden="true"></i> Login</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="logout.php"> <i class="fa fa-user" aria-hidden="true"></i> Logout</a>
-                        </li>
-
                         <form class="form-inline">
                             <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
                                 <i class="fa fa-search" aria-hidden="true"></i>
@@ -119,58 +111,32 @@ if($result){
     <!-- end header section -->
 </div>
 
+<!-- alterar dados -->
 
-<!-- service section -->
+<div class="container-inscricao">
+    <div class="informacoes">
+        <form action="" >
+            <br>
+            <h3>Alterar informações pessoais</h3>
+            <br><br>
+            <label>Username: <?php echo $username ?></label>
+            <br>
+            <input type="text" name="username" placeholder="Alterar username" class="inp">
+            <br><br>
+            <label>Email: <?php echo $email ?></label>
+            <br>
+            <input type="text" name="email" placeholder="Alterar email" class="inp">
+            <br><br>
+            <label>Password: <?php echo "**********" ?></label>
+            <br>
+            <input type="text" name="email" placeholder="Alterar password" class="inp">
+            <br><br><br>
+            <input type="submit" value="Alterar dados" name="botao">
+            <br><br>
+        </form>
 
-
-    <div class="heading_container heading_center" style="margin-top: 80px">
-        <h2>
-            Perfil <span><?php echo $cargo?></span>
-        </h2>
-        <div class="area">
-
-            <?php
-                //adimn
-                if($tipoUser== ADMINISTRADOR){
-                    echo ' <div class="botoes">
-                <a href="gerirDados.php">
-                    <button>Gerir dados pessoais</button><br>
-                </a>
-                <a href="gestaoUtilizadores.php">
-                    <button>Gerir utilizadores</button><br>
-                </a>
-                <a href="gestaoInscricoes.php">
-                    <button>Gerir inscrições</button><br>
-                </a>
-            </div>';
-                //docente
-                }elseif ($tipoUser == DOCENTE){
-                    echo ' <div class="botoes">
-                <a href="gerirDados.php">
-                    <button>Gerir dados pessoais</button><br>
-                </a>
-                <a href="gestaoInscricoes.php">
-                    <button>Gerir inscrições</button><br>
-                </a>
-            </div>';
-                //aluno
-                }elseif ($tipoUser == ALUNO){
-                    echo ' <div class="botoes">
-                <a href="gerirDados.php">
-                    <button>Gerir dados pessoais</button><br>
-                </a>
-                <a href="gestaoInscricoes.php">
-                    <button>Gerir cursos inscrito</button><br>
-                </a>
-            </div>';
-                }
-            ?>
-
-        </div>
     </div>
-
-
-<!-- end service section -->
+</div>
 
 <!-- info section -->
 
@@ -270,7 +236,6 @@ if($result){
 <!-- end info section -->
 
 
-
 <!-- jQery -->
 <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
 <!-- popper js -->
@@ -291,7 +256,3 @@ if($result){
 </body>
 
 </html>
-
-<?php
-
-mysqli_close($conn);
