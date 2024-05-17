@@ -11,7 +11,7 @@ try{
 }
 
 if($validado == 1){
-    $sql = "UPDATE util_curso SET aceite = 1 WHERE curso = '$curso'";
+    $sql = "UPDATE util_curso SET aceite = 1 WHERE curso = '$curso' AND id_utilizador = '$id'";
     mysqli_query($conn, $sql);
     header("Location: gestaoInscricoes.php");
 
