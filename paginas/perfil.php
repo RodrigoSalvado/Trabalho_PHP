@@ -136,7 +136,7 @@ if($result){
                 <a href="paginaPrincipal.php">
                     <button>Gerir dados pessoais</button><br>
                 </a>
-                <a href="paginaPrincipal.php">
+                <a href="gestaoUtilizadores.php">
                     <button>Gerir utilizadores</button><br>
                 </a>
                 <a href="gestaoInscricoes.php">
