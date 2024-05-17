@@ -185,9 +185,9 @@ echo $user;
                             <tbody>
                             <div class="botoes_gest">';
 
-                            $sql = "SELECT id_utilizador 
+                            $sql = "SELECT id_utilizador , curso
                                     FROM util_curso 
-                                    WHERE curso IN (SELECT curso FROM curso WHERE docente = $user) 
+                                    WHERE curso IN (SELECT curso FROM curso WHERE docente = '$user') 
                                     AND aceite = 0;";
                             $result = mysqli_query($conn, $sql);
 
@@ -246,7 +246,7 @@ echo $user;
                                     echo "
                                         <tr>
                                             <td class='text-center'>$curso</td>
-                                            <td class='text-center'><a href='validarInscricao.php?id=" . $id . "&curso=".$curso."><button>Desistir</button></a></td>
+                                            <td class='text-center'><a href='validarInscricao.php?id=" . $id . "&curso=".$curso."'><button>Desistir</button></a></td>
                                         </tr>";
                                 }
                             }
