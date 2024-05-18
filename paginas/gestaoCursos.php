@@ -115,7 +115,7 @@ echo $user;
 
     <div class="heading_container heading_center" style="margin-top: 80px">
         <h2>
-            Gestão de Utilizadores <span></span>
+            Gestão de Cursos <span></span>
         </h2>
         <div class="container">
             <table class="table table-primary table-sortable" role="grid">
@@ -159,7 +159,7 @@ echo $user;
                                         <td class='text-center'>$max_num</td>
                                         <td class='text-center'>$vagas</td>
                                         <td class='text-center'><a href='apagar.php?curso=$nome'><button>Apagar</button></a></td>
-                                        <td class='text-center'><a href='gerirDados.php'><button>Detalhes</button></a></td>
+                                        <td class='text-center'><a href='gerirDados.php?curso=1'><button>Detalhes</button></a></td>
                                     </tr>";
                         }
                     }
@@ -169,7 +169,7 @@ echo $user;
                 </tbody>
             </table>
 
-            <button class="btn-curso" style="margin: 20px">Adicionar Curso</button>
+            <a href="criarCurso.php"><button class="btn-curso" style="margin: 20px">Adicionar Curso</button></a>
         </div>
     </div>
 
