@@ -131,7 +131,7 @@ if($result && mysqli_num_rows($result) > 0){
 <div class="container-inscricao">
     <div class="informacoes">
         <form action="inscrever.php" method="post">
-            <input type="hidden" name="nome" value="<?php echo htmlspecialchars($nome)?>">
+            <input type="hidden" name="nome" value="<?php echo $nome?>">
             <br>
             <h3>Solicitar inscrição no curso de <br><span style="color: #0F054CFF;"><?php echo $nome ?></span></h3>
             <br><br>

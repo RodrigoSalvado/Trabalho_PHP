@@ -3,20 +3,33 @@ include "../basedados/basedados.h";
 global $conn;
 session_start();
 
-$username = $_SESSION["user"];
-echo $username;
+if(isset($_GET["id"])){
+    $id_utilizador = $_GET["id"];
+}
 
-$sql = "SELECT email, password FROM utilizador WHERE username = '$username'";
+//se for o proprio utilizador a aceder a pagina
+if(isset($_SESSION["user"])){
+    $username = $_SESSION["user"];
+    $sqlS = "SELECT email FROM utilizador WHERE username = '$username'";
+    $resultS = mysqli_query($conn, $sqlS);
+
+    if ($resultS && mysqli_num_rows($resultS) > 0) {
+        $row = mysqli_fetch_assoc($resultS);
+        $email = $row["email"];
+    }
+}
+
+//se for o admin a aceder aos dados do utilizador
+$sql = "SELECT username, email FROM utilizador WHERE id_utilizador = '$id_utilizador'";
 $result = mysqli_query($conn, $sql);
 
 if($result && mysqli_num_rows($result) > 0){
     while($row = mysqli_fetch_assoc($result)){
+        $username = $row["username"];
         $email = $row["email"];
-        $password = $row["password"];
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -115,21 +128,22 @@ if($result && mysqli_num_rows($result) > 0){
 
 <div class="container-inscricao">
     <div class="informacoes">
-        <form action="" >
+        <form action="alterar.php" method="post" >
+            <input type="hidden" name="nomeUser" value="<?php echo $username?>">
             <br>
             <h3>Alterar informações pessoais</h3>
             <br><br>
             <label>Username: <?php echo $username ?></label>
             <br>
-            <input type="text" name="username" placeholder="Alterar username" class="inp">
+            <input type="text" name="username" placeholder="Novo username" class="inp">
             <br><br>
             <label>Email: <?php echo $email ?></label>
             <br>
-            <input type="text" name="email" placeholder="Alterar email" class="inp">
+            <input type="email" name="email" placeholder="Novo email" class="inp">
             <br><br>
             <label>Password: <?php echo "**********" ?></label>
             <br>
-            <input type="text" name="email" placeholder="Alterar password" class="inp">
+            <input type="text" name="pass" placeholder="Nova password" class="inp">
             <br><br><br>
             <input type="submit" value="Alterar dados" name="botao">
             <br><br>
