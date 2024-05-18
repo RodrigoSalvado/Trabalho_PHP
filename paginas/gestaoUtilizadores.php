@@ -6,17 +6,6 @@ include "ConstUtilizadores.php";
 session_start();
 
 $user = $_SESSION["user"];
-
-$sqlId = "SELECT id_utilizador, tipo_utilizador FROM utilizador WHERE username = '$user'";
-$resultId = mysqli_query($conn, $sqlId);
-
-if(mysqli_num_rows($resultId)>0){
-    while($row = mysqli_fetch_assoc($resultId)){
-        $id = $row["id_utilizador"];
-        $tipoUtilizador = $row["tipo_utilizador"];
-    }
-}
-
 echo $user;
 
 
@@ -136,19 +125,68 @@ echo $user;
                         <th class="text-center header" scope="col" role="columnheader"><span>Cargo</span></th>
                         <th class="text-center header" scope="col" role="columnheader"><span>Promover</span></th>
                         <th class="text-center header" scope="col" role="columnheader"><span>Despromover</span></th>
+                        <th class="text-center header" scope="col" role="columnheader"><span>Apagar</span></th>
                         <th class="text-center header" scope="col" role="columnheader"><span>Detalhes</span></th>
                     </tr>
                 </thead>
                 <tbody>
                 <div class="botoes_gest">
-                    <tr>
-                        <td class='text-center'>$utilizador</td>
-                        <td class='text-center'>$tipo_utilizador</td>
-                        <td class='text-center'><a href='promocao.php?user=&promover=1'><button>Promover</button></a></td>
-                        <td class='text-center'><a href='promocao.php?user='><button>Despromover</button></a></td>
-                        <td class='text-center'><a href='apagar.php?user='><button>Apagar</button></a></td>
-                        <td class='text-center'><a href=''><button>Detalhes</button></a></td>
-                    </tr>
+                    <?php
+
+                        $sql = "SELECT username, tipo_utilizador, id_utilizador FROM utilizador WHERE username != '$user'";
+                        $result = mysqli_query($conn, $sql);
+
+                        if(mysqli_num_rows($result)>0){
+                            while($row = mysqli_fetch_assoc($result)){
+
+                                $utilizador = $row["username"];
+                                $tipo_utilizador = $row["tipo_utilizador"];
+                                $id_utilizador = $row["id_utilizador"];
+
+                                switch ($tipo_utilizador){
+                                    case ADMINISTRADOR:
+                                        $tipo = "Administrador";
+                                        break;
+                                    case DOCENTE:
+                                        $tipo = "Docente";
+                                        break;
+                                    case ALUNO:
+                                        $tipo = "Aluno";
+                                        break;
+                                    case CLIENTE:
+                                        $tipo = "Cliente";
+                                        break;
+                                }
+
+                                if($tipo_utilizador == CLIENTE){
+                                    echo "
+                                    <tr>
+                                        <td class='text-center'>$utilizador</td>
+                                        <td class='text-center'>$tipo</td>
+                                        <td class='text-center'><a href='promocao.php?promover=1&id=$id_utilizador'><button>Promover</button></a></td>
+                                        <td class='text-center'>/</td>
+                                        <td class='text-center'><a href='apagar.php?user=$utilizador'><button>Apagar</button></a></td>
+                                        <td class='text-center'>/</td>
+                                    </tr>
+                                ";
+                                }else{
+                                    echo "
+                                    <tr>
+                                        <td class='text-center'>$utilizador</td>
+                                        <td class='text-center'>$tipo</td>
+                                        <td class='text-center'><a href='promocao.php?promover=1&id=$id_utilizador'><button>Promover</button></a></td>
+                                        <td class='text-center'><a href='promocao.php?promover=0&id=$id_utilizador'><button>Despromover</button></a></td>
+                                        <td class='text-center'><a href='apagar.php?user=$utilizador'><button>Apagar</button></a></td>
+                                        <td class='text-center'><a href='gerirDados.php?id=".$id_utilizador."'><button>Detalhes</button></a></td>
+                                    </tr>
+                                ";
+                                }
+                            }
+                        }
+
+
+
+                    ?>
 
         </div>
         </tbody>

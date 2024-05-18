@@ -34,8 +34,11 @@ if($promover == 1){
             header("Location: gestaoUtilizadores.php");
             break;
 
-        default:
-            echo "inicie sessao";
+        case CLIENTE:
+            $sql = "UPDATE utilizador SET tipo_utilizador = 2 WHERE id_utilizador = '$id'";
+            mysqli_query($conn, $sql);
+            echo "<script>alert('Promoveu o utilizador para Aluno!')</script>";
+            header("Location: gestaoUtilizadores.php");
             break;
     }
 }else {
@@ -56,10 +59,6 @@ if($promover == 1){
 
         case ALUNO:
             echo "<script>alert('Este utilizador já tem o cargo minimo!')</script>";
-            break;
-
-        default:
-            echo "inicie sessao";
             break;
     }
 }
