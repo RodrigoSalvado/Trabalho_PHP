@@ -1060,3 +1060,12 @@ a:focus {
   width: 50%;
   height: 10vh;
 }
+
+/*-----------gerirDados-------------*/
+.informacoes .inp{
+  height: 5vh;
+  padding: 10px;
+}
+.informacoes .inp::placeholder{
+  color: white;
+}
