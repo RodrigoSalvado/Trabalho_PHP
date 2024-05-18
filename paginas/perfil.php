@@ -142,6 +142,9 @@ if($result){
                 <a href="gestaoInscricoes.php">
                     <button>Gerir inscrições</button><br>
                 </a>
+                <a href="gestaoCursos.php">
+                    <button>Gerir Cursos</button><br>
+                </a>
             </div>';
                 //docente
                 }elseif ($tipoUser == DOCENTE){
