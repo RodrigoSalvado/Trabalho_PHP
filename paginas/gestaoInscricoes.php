@@ -139,17 +139,18 @@ echo $user;
                                 <tr>
                                     <th class="text-center header" scope="col" role="columnheader"><span>Curso</span></th>
                                     <th class="text-center header" scope="col" role="columnheader"><span>Utilizador</span></th>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Estado</span></th>
                                     <th class="text-center header" scope="col" role="columnheader"><span>Aceitar</span></th>
                                     <th class="text-center header" scope="col" role="columnheader"><span>Recusar</span></th>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Expulsar</span></th>
                                 </tr>
                             </thead>
                             <tbody>
                             <div class="botoes_gest">';
 
-                            $sql = "SELECT u.username, uc.id_utilizador, uc.curso
+                            $sql = "SELECT u.username, uc.id_utilizador, uc.curso, uc.aceite
                                     FROM utilizador u
-                                    JOIN util_curso uc ON u.id_utilizador = uc.id_utilizador
-                                    WHERE uc.aceite = 0;";
+                                    JOIN util_curso uc ON u.id_utilizador = uc.id_utilizador";
                             $result = mysqli_query($conn, $sql);
 
                             if (mysqli_num_rows($result) > 0) {
@@ -157,15 +158,30 @@ echo $user;
                                     $curso = $row["curso"];
                                     $id_aluno = $row["id_utilizador"];
                                     $username = $row["username"];
+                                    $aceite = $row["aceite"];
+                                    $aceitado = ($aceite == 1)? "Aceite" : "Por aceitar";
 
-
-                                    echo "
-                                    <tr>
-                                      <td class='text-center'>$curso</td>
-                                      <td class='text-center'>$username</td>
-                                      <td class='text-center'><a href='validarInscricao.php?id=" . $id_aluno . "&validar=1&curso=".$curso."'><button>Aceitar</button></a></td>
-                                      <td class='text-center'><a href='validarInscricao.php?id=" . $id_aluno . "&curso=".$curso."'><button>Recusar</button></a></td>
-                                   </tr>";
+                                    if($aceite == 0){
+                                        echo "
+                                                <tr>
+                                                    <td class='text-center'>$curso</td>
+                                                    <td class='text-center'>$username</td>
+                                                    <td class='text-center'>$aceitado</td>
+                                                    <td class='text-center'><a href='validarInscricao.php?id=" . $id_aluno . "&validar=1&curso=".$curso."'><button>Aceitar</button></a></td>
+                                                    <td class='text-center'><a href='validarInscricao.php?id=" . $id_aluno . "&curso=".$curso."'><button>Recusar</button></a></td>
+                                                    <td class='text-center'>/</td>
+                                                </tr>";
+                                    }else{
+                                        echo "
+                                                    <tr>
+                                                        <td class='text-center'>$curso</td>
+                                                        <td class='text-center'>$username</td>
+                                                        <td class='text-center'>$aceitado</td>
+                                                        <td class='text-center'>/</td>
+                                                        <td class='text-center'>/</td>
+                                                        <td class='text-center'><a href='validarInscricao.php?id=" . $id_aluno . "&curso=".$curso."'><button>Expulsar</button></a></td>
+                                                    </tr>";
+                                    }
                                 }
                             }
 
@@ -178,23 +194,25 @@ echo $user;
                                 <tr>
                                     <th class="text-center header" scope="col" role="columnheader"><span>Curso</span></th>
                                     <th class="text-center header" scope="col" role="columnheader"><span>Utilizador</span></th>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Estado</span></th>
                                     <th class="text-center header" scope="col" role="columnheader"><span>Aceitar</span></th>
-                                    <th class="text-center header" scope="col" role="columnheader"><span>Recusar</span></th>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Recusar</span></th>                                 
                                 </tr>
                             </thead>
                             <tbody>
                             <div class="botoes_gest">';
 
-                            $sql = "SELECT id_utilizador , curso
+                            $sql = "SELECT id_utilizador , curso, aceite
                                     FROM util_curso 
-                                    WHERE curso IN (SELECT curso FROM curso WHERE docente = '$user') 
-                                    AND aceite = 0;";
+                                    WHERE curso IN (SELECT curso FROM curso WHERE docente = '$user')";
                             $result = mysqli_query($conn, $sql);
 
                             if (mysqli_num_rows($result) > 0) {
                                 while ($row = mysqli_fetch_assoc($result)) {
                                     $curso = $row["curso"];
                                     $id_aluno = $row["id_utilizador"];
+
+                                    $aceitado = ($row["aceite"] == 1)? "Aceite" : "Por aceitar";
 
                                     $sqlAluno = "SELECT username FROM utilizador WHERE id_utilizador = $id_aluno";
                                     $resultAluno = mysqli_query($conn, $sqlAluno);
@@ -207,9 +225,12 @@ echo $user;
                                                 <tr>
                                                     <td class='text-center'>$curso</td>
                                                     <td class='text-center'>$username</td>
+                                                    <td class='text-center'>$aceitado</td>
                                                     <td class='text-center'><a href='validarInscricao.php?id=" . $id_aluno . "&validar=1&curso=".$curso."'><button>Aceitar</button></a></td>
                                                     <td class='text-center'><a href='validarInscricao.php?id=" . $id_aluno . "&curso=".$curso."'><button>Recusar</button></a></td>
                                                 </tr>";
+
+
                                         }
                                     }
 
