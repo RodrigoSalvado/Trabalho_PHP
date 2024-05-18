@@ -3,41 +3,63 @@ global $conn;
 include "../basedados/basedados.h";
 include "./ConstUtilizadores.php";
 
-$user = $_GET["user"];
 $promover = $_GET["promover"];
+$id = $_GET["id"];
+
+$sql = "SELECT tipo_utilizador FROM utilizador WHERE id_utilizador = '$id'";
+$result = mysqli_query($conn, $sql);
+
+if(mysqli_num_rows($result)>0){
+    $row = mysqli_fetch_assoc($result);
+    $tipoUtilizador = $row["tipo_utilizador"];
+}
 
 if($promover == 1){
+    switch ($tipoUtilizador){
+        case ADMINISTRADOR:
+            echo "<script>alert('Este utilizador já tem o cargo máximo!')</script>";
+            break;
 
-    $sqlTipo = "SELECT tipo_utilizador FROM utilizador WHERE username = '$user'";
-    $resultTipo = mysqli_query($conn, $sqlTipo);
-    if(mysqli_affected_rows($resultTipo)>0){
-        $rowTipo = mysqli_fetch_assoc($resultTipo);
-        $tipo_utilizador = $rowTipo["tipo_utilizador"];
+        case DOCENTE:
+            $sql = "UPDATE utilizador SET tipo_utilizador = 4 WHERE id_utilizador = '$id'";
+            mysqli_query($conn, $sql);
+            echo "<script>alert('Promoveu o utilizador para Admin!')</script>";
+            header("Location: gestaoUtilizadores.php");
+            break;
+
+        case ALUNO:
+            $sql = "UPDATE utilizador SET tipo_utilizador = 3 WHERE id_utilizador = '$id'";
+            mysqli_query($conn, $sql);
+            echo "<script>alert('Promoveu o utilizador para Docente!')</script>";
+            header("Location: gestaoUtilizadores.php");
+            break;
+
+        default:
+            echo "inicie sessao";
+            break;
     }
-    if($tipo_utilizador <= ADMINISTRADOR){
-        $tipo_utilizador +=1;
-        $sql = "UPDATE utilizador SET tipo_utilizador = $tipo_utilizador";
-        $result = mysqli_query($conn, $sql);
+}else {
+    switch ($tipoUtilizador) {
+        case ADMINISTRADOR:
+            $sql = "UPDATE utilizador SET tipo_utilizador = 3 WHERE id_utilizador = '$id'";
+            mysqli_query($conn, $sql);
+            echo "<script>alert('Promoveu o utilizador para Docente!')</script>";
+            header("Location: gestaoUtilizadores.php");
+            break;
 
-    }else{
-        echo "<script>alert('O utilizador já tem o cargo máximo!')</script>";
-        header("Location: gestaoUtilizadores.php");
-    }
+        case DOCENTE:
+            $sql = "UPDATE utilizador SET tipo_utilizador = 2 WHERE id_utilizador = '$id'";
+            mysqli_query($conn, $sql);
+            echo "<script>alert('Promoveu o utilizador para Admin!')</script>";
+            header("Location: gestaoUtilizadores.php");
+            break;
 
-}else{
-    $sqlTipo = "SELECT tipo_utilizador FROM utilizador WHERE username = '$user'";
-    $resultTipo = mysqli_query($conn, $sqlTipo);
-    if(mysqli_affected_rows($resultTipo)>0){
-        $rowTipo = mysqli_fetch_assoc($resultTipo);
-        $tipo_utilizador = $rowTipo["tipo_utilizador"];
-    }
-    if($tipo_utilizador >= ALUNO){
-        $tipo_utilizador -=1;
-        $sql = "UPDATE utilizador SET tipo_utilizador = $tipo_utilizador";
-        $result = mysqli_query($conn, $sql);
+        case ALUNO:
+            echo "<script>alert('Este utilizador já tem o cargo minimo!')</script>";
+            break;
 
-    }else{
-        echo "<script>alert('O utilizador já tem o cargo minimo!')</script>";
-        header("Location: gestaoUtilizadores.php");
+        default:
+            echo "inicie sessao";
+            break;
     }
 }
