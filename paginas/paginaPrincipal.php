@@ -31,7 +31,7 @@ echo "<br>" . $tipoUser;
 $_SESSION["tipo_user"] = $tipoUser;
 
 //informacoes dos cursos
-function printCursos($id_curso, $img, $conn){
+function printCursos($id_curso, $img, $conn, $sessao){
 
     $sql = "SELECT nome, descricao FROM curso WHERE id_curso = '$id_curso'";
     $result = mysqli_query($conn, $sql);
@@ -42,7 +42,8 @@ function printCursos($id_curso, $img, $conn){
         $desc = $row["descricao"];
     }
 
-    echo '
+    if($sessao){
+        echo '
           <div class="col-md-4 ">
              <div class="box ">
                  <div class="img-box">
@@ -61,8 +62,29 @@ function printCursos($id_curso, $img, $conn){
                         </a>
                  </div>
              </div>
-          </div>
-    ';
+          </div>';
+    }else{
+        echo '
+          <div class="col-md-4 ">
+             <div class="box ">
+                 <div class="img-box">
+                     <img src="s'.$img.'.png" alt="">
+                 </div>
+                 <div class="detail-box">
+                
+                    <h5>
+                        '.$nome.'
+                    </h5>
+                    <p>
+                        '.$desc.'
+                    </p>
+                        <a href="login.html">
+                            Inicie sessão para se increver no nosso curso!
+                        </a>
+                 </div>
+             </div>
+          </div>';
+    }
 }
 
 
@@ -244,19 +266,20 @@ function printCursos($id_curso, $img, $conn){
             $sql = "SELECT *, COUNT(*) as total FROM curso";
             $result = mysqli_query($conn, $sql);
 
+
             if(mysqli_num_rows($result)>0) {
                 $row = mysqli_fetch_assoc($result);
-                    if (isset($_SESSION["user"])) {
-                        for ($i = 3; $i < $row["total"] + 3; $i++) {
-                            if ($i % 3 == 0) {
-                                echo '<div class="row">';
-                            }
-                            echo printCursos($i -2, ($i%3)+1, $conn);
-                            if ($i % 3 == 2) {
-                                echo '</div>';
-                            }
-                        }
+
+                for ($i = 3; $i < $row["total"] + 3; $i++) {
+                    if ($i % 3 == 0) {
+                        echo '<div class="row">';
                     }
+                    echo printCursos($i -2, ($i%3)+1, $conn, isset($_SESSION["user"]));
+                    if ($i % 3 == 2) {
+                        echo '</div>';
+                    }
+                }
+
 
             }
                   ?>

@@ -1,5 +1,67 @@
 <?php
-    session_start();
+global $conn;
+include "../basedados/basedados.h";
+
+session_start();
+
+
+
+function printCursos($id_curso, $img, $conn, $sessao){
+
+    $sql = "SELECT nome, descricao FROM curso WHERE id_curso = '$id_curso'";
+    $result = mysqli_query($conn, $sql);
+
+    if(mysqli_num_rows($result)>0){
+        $row = mysqli_fetch_assoc($result);
+        $nome = $row["nome"];
+        $desc = $row["descricao"];
+    }
+
+    if($sessao){
+        echo '
+          <div class="col-md-4 ">
+             <div class="box ">
+                 <div class="img-box">
+                     <img src="s'.$img.'.png" alt="">
+                 </div>
+                 <div class="detail-box">
+                
+                    <h5>
+                        '.$nome.'
+                    </h5>
+                    <p>
+                        '.$desc.'
+                    </p>
+                        <a href="inscricaoCurso.php?id='.$id_curso.'">
+                            Inscreva-se!
+                        </a>
+                 </div>
+             </div>
+          </div>';
+    }else{
+        echo '
+          <div class="col-md-4 ">
+             <div class="box ">
+                 <div class="img-box">
+                     <img src="s'.$img.'.png" alt="">
+                 </div>
+                 <div class="detail-box">
+                
+                    <h5>
+                        '.$nome.'
+                    </h5>
+                    <p>
+                        '.$desc.'
+                    </p>
+                        <a href="login.html">
+                            Inicie sessão para se increver no nosso curso!
+                        </a>
+                 </div>
+             </div>
+          </div>';
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -125,181 +187,27 @@
           <p>
           </p>
         </div>
-        <div class="row">
-          <div class="col-md-4 ">
-            <div class="box ">
-              <div class="img-box">
-                <img src="s1.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h5>
-                  Currency Wallet
-                </h5>
-                <p>
-                  fact that a reader will be distracted by the readable content of a page when looking at its layout.
-                  The
-                  point of using
-                </p>
-
-                <?php
-                    if(isset($_SESSION["user"])){
-                        echo '<a href="inscricaoCurso.php">
-                Inscreva-se!
-                </a>';
-                }else{
-                echo '<a href="login.html">
-                Inicie sessão para se increver no nosso curso!
-              </a>';
-                }
-                ?>
+          <?php
+          $sql = "SELECT *, COUNT(*) as total FROM curso";
+          $result = mysqli_query($conn, $sql);
 
 
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 ">
-            <div class="box ">
-              <div class="img-box">
-                <img src="s2.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h5>
-                  Security Storage
-                </h5>
-                <p>
-                  fact that a reader will be distracted by the readable content of a page when looking at its layout.
-                  The
-                  point of using
-                </p>
-                <?php
-                  if(isset($_SESSION["user"])){
-                      echo '<a href="inscricaoCurso.php">
-                Inscreva-se!
-                </a>';
-                }else{
-                echo '<a href="login.html">
-                Inicie sessão para se increver no nosso curso!
-              </a>';
-                }
-                ?>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 ">
-            <div class="box ">
-              <div class="img-box">
-                <img src="s3.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h5>
-                  Expert Support
-                </h5>
-                <p>
-                  fact that a reader will be distracted by the readable content of a page when looking at its layout.
-                  The
-                  point of using
-                </p>
-                <?php
-                  if(isset($_SESSION["user"])){
-                      echo '<a href="inscricaoCurso.php">
-                Inscreva-se!
-                </a>';
-                }else{
-                echo '<a href="login.html">
-                Inicie sessão para se increver no nosso curso!
-              </a>';
-                }
-                ?>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4 ">
-            <div class="box ">
-              <div class="img-box">
-                <img src="s1.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h5>
-                  Currency Wallet
-                </h5>
-                <p>
-                  fact that a reader will be distracted by the readable content of a page when looking at its layout.
-                  The
-                  point of using
-                </p>
-                <?php
-                          if(isset($_SESSION["user"])){
-                              echo '<a href="inscricaoCurso.php">
-                Inscreva-se!
-                </a>';
-                }else{
-                echo '<a href="login.html">
-                Inicie sessão para se increver no nosso curso!
-              </a>';
-                }
-                ?>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 ">
-            <div class="box ">
-              <div class="img-box">
-                <img src="s2.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h5>
-                  Security Storage
-                </h5>
-                <p>
-                  fact that a reader will be distracted by the readable content of a page when looking at its layout.
-                  The
-                  point of using
-                </p>
-                <?php
-                          if(isset($_SESSION["user"])){
-                              echo '<a href="inscricaoCurso.php">
-                Inscreva-se!
-                </a>';
-                }else{
-                echo '<a href="login.html">
-                Inicie sessão para se increver no nosso curso!
-              </a>';
-                }
-                ?>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 ">
-            <div class="box ">
-              <div class="img-box">
-                <img src="s3.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h5>
-                  Expert Support
-                </h5>
-                <p>
-                  fact that a reader will be distracted by the readable content of a page when looking at its layout.
-                  The
-                  point of using
-                </p>
-                <?php
-                          if(isset($_SESSION["user"])){
-                              echo '<a href="inscricaoCurso.php">
-                Inscreva-se!
-                </a>';
-                }else{
-                echo '<a href="login.html">
-                Inicie sessão para se increver no nosso curso!
-              </a>';
-                }
-                ?>
-              </div>
-            </div>
-          </div>
-        </div>
+          if(mysqli_num_rows($result)>0) {
+              $row = mysqli_fetch_assoc($result);
+
+              for ($i = 3; $i < $row["total"] + 3; $i++) {
+                  if ($i % 3 == 0) {
+                      echo '<div class="row">';
+                  }
+                  echo printCursos($i -2, ($i%3)+1, $conn, isset($_SESSION["user"]));
+                  if ($i % 3 == 2) {
+                      echo '</div>';
+                  }
+              }
+
+
+          }
+          ?>
 
       </div>
     </div>
