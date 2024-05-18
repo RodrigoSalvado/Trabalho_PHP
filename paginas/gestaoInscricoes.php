@@ -19,7 +19,6 @@ if(mysqli_num_rows($resultId)>0){
 
 echo $user;
 
-
 ?>
 
 
