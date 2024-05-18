@@ -31,22 +31,41 @@ echo "<br>" . $tipoUser;
 $_SESSION["tipo_user"] = $tipoUser;
 
 //informacoes dos cursos
-function obterDadosCursos($id_curso, $conn){
-    $sqlSelect = "SELECT * FROM curso WHERE id_curso = '$id_curso'";
-    $resultSelect = mysqli_query($conn, $sqlSelect);
-    if($resultSelect && mysqli_num_rows($resultSelect) > 0){
-        while($row1 = mysqli_fetch_assoc($resultSelect)){
-            return $row1;
-        }
+function printCursos($id_curso, $img, $conn){
+
+    $sql = "SELECT nome, descricao FROM curso WHERE id_curso = '$id_curso'";
+    $result = mysqli_query($conn, $sql);
+
+    if(mysqli_num_rows($result)>0){
+        $row = mysqli_fetch_assoc($result);
+        $nome = $row["nome"];
+        $desc = $row["descricao"];
     }
+
+    echo '
+          <div class="col-md-4 ">
+             <div class="box ">
+                 <div class="img-box">
+                     <img src="s'.$img.'.png" alt="">
+                 </div>
+                 <div class="detail-box">
+                
+                    <h5>
+                        '.$nome.'
+                    </h5>
+                    <p>
+                        '.$desc.'
+                    </p>
+                        <a href="inscricaoCurso.php?id='.$id_curso.'">
+                            Inscreva-se!
+                        </a>
+                 </div>
+             </div>
+          </div>
+    ';
 }
 
-$dados1 = obterDadosCursos(1, $conn);
-$dados2 = obterDadosCursos(2, $conn);
-$dados3 = obterDadosCursos(3, $conn);
-$dados4 = obterDadosCursos(4, $conn);
-$dados5 = obterDadosCursos(5, $conn);
-$dados6 = obterDadosCursos(6, $conn);
+
 
 
 
@@ -199,66 +218,8 @@ $dados6 = obterDadosCursos(6, $conn);
             </div>
           </div>
         </div>
-        <div class="carousel-item ">
-          <div class="container ">
-            <div class="row">
-              <div class="col-md-6 ">
-                <div class="detail-box">
-                  <h1>
-                    Crypto <br>
-                    Academy <ion-icon name="logo-bitcoin"></ion-icon>
-                  </h1>
-                  <p>
-                    Na Crypto Academy a nossa missão é ajuda-lo a adquirir o conhecimento e as habilidades necessárias para entrar com confiança no mundo dos investimentos e das criptomoedas. Oferecemos uma variedade de cursos que abrangem diversas áreas e diferentes estratégias.
-                    <br>Registe-se no nosso site e venha aprender connosco!                  </p>
-                  <div class="btn-box">
-                    <a href="" class="btn1">
-                      Read More
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="img-box">
-                  <img src="slider-img.png" alt="">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <div class="container ">
-            <div class="row">
-              <div class="col-md-6 ">
-                <div class="detail-box">
-                  <h1>
-                    Crypto <br>
-                    Academy <ion-icon name="logo-bitcoin"></ion-icon>
-                  </h1>
-                  <p>
-                    Na Crypto Academy a nossa missão é ajuda-lo a adquirir o conhecimento e as habilidades necessárias para entrar com confiança no mundo dos investimentos e das criptomoedas. Oferecemos uma variedade de cursos que abrangem diversas áreas e diferentes estratégias.
-                    <br>Registe-se no nosso site e venha aprender connosco!                  </p>
-                  <div class="btn-box">
-                    <a href="" class="btn1">
-                      Read More
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="img-box">
-                  <img src="slider-img.png" alt="">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <ol class="carousel-indicators">
-        <li data-target="#customCarousel1" data-slide-to="0" class="active"></li>
-        <li data-target="#customCarousel1" data-slide-to="1"></li>
-        <li data-target="#customCarousel1" data-slide-to="2"></li>
-      </ol>
+
+
     </div>
 
   </section>
@@ -279,208 +240,28 @@ $dados6 = obterDadosCursos(6, $conn);
           </p>
         </div>
 
+          <?php
+            $sql = "SELECT *, COUNT(*) as total FROM curso";
+            $result = mysqli_query($conn, $sql);
 
-        <div class="row">
-          <div class="col-md-4 ">
-            <div class="box ">
-              <div class="img-box">
-                <img src="s1.png" alt="">
-              </div>
-              <div class="detail-box">
+            if(mysqli_num_rows($result)>0) {
+                $row = mysqli_fetch_assoc($result);
+                    if (isset($_SESSION["user"])) {
+                        for ($i = 3; $i < $row["total"] + 3; $i++) {
+                            if ($i % 3 == 0) {
+                                echo '<div class="row">';
+                            }
+                            echo printCursos($i -2, ($i%3)+1, $conn);
+                            if ($i % 3 == 2) {
+                                echo '</div>';
+                            }
+                        }
+                    }
 
-                <h5>
-                    <?php
-                    echo $dados1["nome"];
-                    ?>
-                </h5>
-                <p>
-                    <?php
-                    echo $dados1["descricao"];
-                    ?>
-                </p>
-
-                  <?php
-                    if(isset($_SESSION["user"])){
-                        echo '<a href="inscricaoCurso.php?id=1">
-                  Inscreva-se!
-                </a>';
-                  }else{
-                        echo '<a href="login.html">
-                  Inicie sessão para se increver no nosso curso!
-                </a>';
-                  }
+            }
                   ?>
               </div>
             </div>
-          </div>
-
-
-
-
-          <div class="col-md-4 ">
-            <div class="box ">
-              <div class="img-box">
-                <img src="s2.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h5>
-                    <?php
-                    echo $dados2["nome"];
-                    ?>
-                </h5>
-                <p>
-                    <?php
-                    echo $dados2["descricao"];
-                    ?>
-                </p>
-                  <?php
-                  if(isset($_SESSION["user"])){
-                      echo '<a href="inscricaoCurso.php?id=2">
-                  Inscreva-se!
-                </a>';
-                  }else{
-                      echo '<a href="login.html">
-                  Inicie sessão para se increver no nosso curso!
-                </a>';
-                  }
-                  ?>
-              </div>
-            </div>
-          </div>
-
-
-
-
-          <div class="col-md-4 ">
-            <div class="box ">
-              <div class="img-box">
-                <img src="s3.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h5>
-                    <?php
-                    echo $dados3["nome"];
-                    ?>
-                </h5>
-                <p>
-                    <?php
-                    echo $dados3["descricao"];
-                    ?>
-                </p>
-                  <?php
-                  if(isset($_SESSION["user"])){
-                      echo '<a href="inscricaoCurso.php?id=3">
-                  Inscreva-se!
-                </a>';
-                  }else{
-                      echo '<a href="login.html">
-                  Inicie sessão para se increver no nosso curso!
-                </a>';
-                  }
-                  ?>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-          <div class="row">
-              <div class="col-md-4 ">
-                  <div class="box ">
-                      <div class="img-box">
-                          <img src="s1.png" alt="">
-                      </div>
-                      <div class="detail-box">
-                          <h5>
-                              <?php
-                              echo $dados4["nome"];
-                              ?>
-                          </h5>
-                          <p>
-                              <?php
-                              echo $dados4["descricao"];
-                              ?>
-                          </p>
-                          <?php
-                          if(isset($_SESSION["user"])){
-                              echo '<a href="inscricaoCurso.php?id=4">
-                  Inscreva-se!
-                </a>';
-                          }else{
-                              echo '<a href="login.html">
-                  Inicie sessão para se increver no nosso curso!
-                </a>';
-                          }
-                          ?>
-                      </div>
-                  </div>
-              </div>
-
-
-
-              <div class="col-md-4 ">
-                  <div class="box ">
-                      <div class="img-box">
-                          <img src="s2.png" alt="">
-                      </div>
-                      <div class="detail-box">
-                          <h5>
-                              <?php
-                              echo $dados5["nome"];
-                              ?>
-                          </h5>
-                          <p>
-                              <?php
-                              echo $dados5["descricao"];
-                              ?>
-                          </p>
-                          <?php
-                          if(isset($_SESSION["user"])){
-                              echo '<a href="inscricaoCurso.php?id=5">
-                  Inscreva-se!
-                </a>';
-                          }else{
-                              echo '<a href="login.html">
-                  Inicie sessão para se increver no nosso curso!
-                </a>';
-                          }
-                          ?>
-                      </div>
-                  </div>
-              </div>
-
-
-
-              <div class="col-md-4 ">
-                  <div class="box ">
-                      <div class="img-box">
-                          <img src="s3.png" alt="">
-                      </div>
-                      <div class="detail-box">
-                          <h5>
-                              <?php
-                              echo $dados6["nome"];
-                              ?>
-                          </h5>
-                          <p>
-                              <?php
-                              echo $dados6["descricao"];
-                              ?>
-                          </p>
-                          <?php
-                          if(isset($_SESSION["user"])){
-                              echo '<a href="inscricaoCurso.php?id=6">
-                  Inscreva-se!
-                </a>';
-                          }else{
-                              echo '<a href="login.html">
-                  Inicie sessão para se increver no nosso curso!
-                </a>';
-                          }
-                          ?>
-                      </div>
-                  </div>
-              </div>
           </div>
 
       </div>
