@@ -175,7 +175,7 @@ if($result){
                 //docente
                 }elseif ($tipoUser == DOCENTE){
                     echo ' <div class="botoes">
-                <a href="gerirDados.php?utilizador=1">
+                <a href="gerirDados.php?utilizador=1&id='.$id_utilizador.'">
                     <button>Gerir dados pessoais</button><br>
                 </a>
                 <a href="gestaoInscricoes.php">
