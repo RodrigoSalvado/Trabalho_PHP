@@ -9,6 +9,9 @@ try{
     $curso = isset($_GET["curso"])? 1: 0;
     $utilizador = isset($_GET["utilizador"])? 1:0;
     $user = $_SESSION["user"];
+
+
+
 }catch(Exception $e){
 
 }
@@ -55,6 +58,8 @@ if($utilizador == 1){
                 $novaPass = md5($_POST["pass"]);
                 echo $novaPass."<br>";
             }
+
+
         }
     }
 
@@ -62,14 +67,27 @@ if($utilizador == 1){
     if(isset($_POST["botao"])){
 
         if(isset($novoUser)){
-            $sqlUser = "UPDATE utilizador SET username = '$novoUser' WHERE id_utilizador = '$id_utilizador'";
-            mysqli_query($conn, $sqlUser);
-            $alterado = true;
+            $sqlCount = "SELECT username FROM utilizador WHERE username = '$novoUser'";
+            $resultCount = mysqli_query($conn, $sqlCount);
+            if(mysqli_num_rows($resultCount)>0){
+                echo "<script>window.alert('Esse username já existe!') ; window.location.href = 'gerirDados.php?utilizador=1&id=".$id_utilizador."';</script>";
+            }else{
+                $sqlUser = "UPDATE utilizador SET username = '$novoUser' WHERE id_utilizador = '$id_utilizador'";
+                mysqli_query($conn, $sqlUser);
+                $alterado = true;
+            }
         }
         if(isset($novoEmail)){
-            $sqlUser = "UPDATE utilizador SET  email = '$novoEmail' WHERE id_utilizador = '$id_utilizador'";
-            mysqli_query($conn, $sqlUser);
-            $alterado = true;
+            $sqlCount = "SELECT email FROM utilizador WHERE email = '$novoEmail'";
+            $resultCount = mysqli_query($conn, $sqlCount);
+
+            if(mysqli_num_rows($resultCount)>0){
+                echo "<script>window.alert('Esse Email já existe!') ; window.location.href = 'gerirDados.php?utilizador=1&id=".$id_utilizador."';</script>";
+            }else{
+                $sqlUser = "UPDATE utilizador SET  email = '$novoEmail' WHERE id_utilizador = '$id_utilizador'";
+                mysqli_query($conn, $sqlUser);
+                $alterado = true;
+            }
         }
         if(isset($novaPass)){
             $sqlUser = "UPDATE utilizador SET password = '$novaPass' WHERE id_utilizador = '$id_utilizador'";
@@ -78,14 +96,13 @@ if($utilizador == 1){
         }
 
         if ($alterado){
-            echo $tipo;
             if($tipo != ADMINISTRADOR && $tipoSessao == ADMINISTRADOR){
                 echo "<script>window.alert('Dados alterados com sucesso') ; window.location.href = 'gestaoUtilizadores.php';</script>";
             }else{
                 echo "<script>window.alert('Dados alterados com sucesso!') ; window.location.href = 'login.html';</script>";
             }
         }else{
-            echo "<script>window.alert('Insira algum dado para ser alterado') ; window.location.href = 'gerirDados.php?utilizador=1';</script>";
+            echo "<script>window.alert('Insira algum dado para ser alterado') ; window.location.href = 'gerirDados.php?utilizador=1&id=".$id_utilizador."';</script>";
         }
 
     }
@@ -142,18 +159,33 @@ if($curso == 1){
             $alterado = true;
         }
         if(isset($novoNome)){
-            $sql = "UPDATE curso SET  nome = '$novoNome' WHERE id_curso = '$id_curso'";
-            mysqli_query($conn, $sql);
+            $sqlCount = "SELECT nome FROM curso WHERE nome = '$novoNome'";
+            $resultCount = mysqli_query($conn, $sqlCount);
 
-            $sql = "UPDATE util_curso SET curso = '$novoNome' WHERE curso = '$nome'";
-            mysqli_query($conn, $sql);
+            if(mysqli_num_rows($resultCount)>0){
+                echo "<script>window.alert('Esse curso já existe!') ; window.location.href = 'gerirDados.php?curso=1&id_curso=".$id_curso."';</script>";
+            }else{
+                $sql = "UPDATE curso SET  nome = '$novoNome' WHERE id_curso = '$id_curso'";
+                mysqli_query($conn, $sql);
 
-            $alterado = true;
+                $sql = "UPDATE util_curso SET curso = '$novoNome' WHERE curso = '$nome'";
+                mysqli_query($conn, $sql);
+
+                $alterado = true;
+            }
+
         }
         if(isset($novaDesc)){
-            $sql = "UPDATE curso SET  descricao = '$novaDesc' WHERE id_curso = '$id_curso'";
-            mysqli_query($conn, $sql);
-            $alterado = true;
+            $sqlCount = "SELECT descricao FROM curso WHERE descricao = '$novaDesc'";
+            $resultCount = mysqli_query($conn, $sqlCount);
+
+            if(mysqli_num_rows($resultCount)>0){
+                echo "<script>window.alert('Essa descrição já existe!') ; window.location.href = 'gerirDados.php?curso=1&id_curso=".$id_curso."';</script>";
+            }else{
+                $sql = "UPDATE curso SET  descricao = '$novaDesc' WHERE id_curso = '$id_curso'";
+                mysqli_query($conn, $sql);
+                $alterado = true;
+            }
         }
         if(isset($novoMaxNum)){
             $sql = "UPDATE curso SET max_num = '$novoMaxNum' WHERE id_curso = '$id_curso'";
