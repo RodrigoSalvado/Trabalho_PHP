@@ -8,7 +8,7 @@ session_start();
 $user = $_SESSION["user"];
 $tipoUtilizador = $_SESSION["tipo"];
 
-if($tipoUtilizador == CLIENTE || empty($tipo)){
+if($tipoUtilizador == CLIENTE || empty($tipoUtilizador)){
     echo "<script>window.alert('Nao tem autorização para entrar aqui') ; window.location.href = 'paginaPrincipal.php';</script>";
 }
 
