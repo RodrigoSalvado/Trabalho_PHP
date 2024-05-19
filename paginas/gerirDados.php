@@ -1,11 +1,13 @@
 <?php
 include "../basedados/basedados.h";
+include "ConstUtilizadores.php";
 global $conn;
 session_start();
 
 try{
     $curso = isset($_GET["curso"])? 1: 0;
     $utilizador = isset($_GET["utilizador"])? 1: 0;
+    $tipo = $_SESSION["tipo"];
 }catch(Exception $e){
 
 }
@@ -211,7 +213,8 @@ if($utilizador==1){
 }
 
 if($curso==1){
-    echo '
+   if($tipo == ADMINISTRADOR){
+       echo '
         <div class="container-inscricao">
             <div class="informacoes">
                 <form action="alterar.php?curso=1&id_curso='.$id_curso.'" method="post" >
@@ -225,18 +228,18 @@ if($curso==1){
                     <label>Docente: '.$docente.'</label>
                     <br>
                     <select name="docente" class="inp" required>';
-                        $sql = "SELECT username FROM utilizador WHERE tipo_utilizador = 3 OR tipo_utilizador = 4";
-                        $result = mysqli_query($conn, $sql);
-                        echo "<option>$docente</option>";
-                        if(mysqli_num_rows($result)>0){
-                            while($row = mysqli_fetch_assoc($result)){
-                                if(strcmp($row["username"],$docente)!=0){
-                                    echo "<option value='".$row['username']."'>".$row['username']."</option>";
-                                }
+       $sql = "SELECT username FROM utilizador WHERE tipo_utilizador = 3 OR tipo_utilizador = 4";
+       $result = mysqli_query($conn, $sql);
+       echo "<option>$docente</option>";
+       if(mysqli_num_rows($result)>0){
+           while($row = mysqli_fetch_assoc($result)){
+               if(strcmp($row["username"],$docente)!=0){
+                   echo "<option value='".$row['username']."'>".$row['username']."</option>";
+               }
 
-                            }
-                        }
-                    echo'</select>
+           }
+       }
+       echo'</select>
                     <br><br>
                     <label>Descrição do Curso:</label>
                     <br>
@@ -253,6 +256,51 @@ if($curso==1){
             </div>
         </div>
     ';
+   }
+   if($tipo == DOCENTE){
+       echo '
+        <div class="container-inscricao">
+            <div class="informacoes">
+                <form action="alterar.php?curso=1&id_curso='.$id_curso.'" method="post" >
+                    <br>
+                    <h3>Alterar Informações do Curso</h3>
+                    <br><br>
+                    <label>Nome: '.$nome.'</label>
+                    <br>
+                    <input type="hidden" name="nome" placeholder="Nome do curso..." value="'.$nome.'" class="inp">
+                    <br><br>
+                    <label>Docente: '.$docente.'</label>
+                    <br>
+                    <select name="docente" class="inp" hidden>';
+       $sql = "SELECT username FROM utilizador WHERE tipo_utilizador = 3 OR tipo_utilizador = 4";
+       $result = mysqli_query($conn, $sql);
+       echo "<option>$docente</option>";
+       if(mysqli_num_rows($result)>0){
+           while($row = mysqli_fetch_assoc($result)){
+               if(strcmp($row["username"],$docente)!=0){
+                   echo "<option value='".$row['username']."'>".$row['username']."</option>";
+               }
+
+           }
+       }
+       echo'</select>
+                    <br><br>
+                    <label>Descrição do Curso:<br> '.$desc.'</label>
+                    <br>
+                    <textarea name="descricao" placeholder="Descrição do curso..." class="inp" hidden>'.$desc.'</textarea>
+                    <br><br>
+                    <label>Numero vagas: '.($max_num - $inscritos).'</label><br>
+                    <label>Numero inscritos: '.$inscritos.'</label>
+                    <br>
+                    <input type="number" min="'.$inscritos.'" step="1" name="max_num" placeholder="Insira número de vagas..." value="'.$max_num.'" class="inp" required>
+                    <br><br><br>
+                    <input type="submit" value="Alterar Curso" name="botao">
+                    <br><br>
+                </form>
+            </div>
+        </div>
+    ';
+   }
 }
 
 

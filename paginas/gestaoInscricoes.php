@@ -6,16 +6,7 @@ include "ConstUtilizadores.php";
 session_start();
 
 $user = $_SESSION["user"];
-
-$sqlId = "SELECT id_utilizador, tipo_utilizador FROM utilizador WHERE username = '$user'";
-$resultId = mysqli_query($conn, $sqlId);
-
-if(mysqli_num_rows($resultId)>0){
-    while($row = mysqli_fetch_assoc($resultId)){
-        $id = $row["id_utilizador"];
-        $tipoUtilizador = $row["tipo_utilizador"];
-    }
-}
+$tipoUtilizador = $_SESSION["tipo"];
 
 echo $user;
 
@@ -280,11 +271,11 @@ echo $user;
                             <tbody>
                             <div class="botoes_gest">';
 
-                            $sql = "SELECT uc.curso, uc.aceite
+                            $sql = "SELECT uc.curso, uc.aceite, u.id_utilizador
                                     FROM util_curso uc
                                     JOIN utilizador u ON uc.id_utilizador = u.id_utilizador
-                                    WHERE u.username = '$user'
-                                    AND u.id_utilizador = '$id';";
+                                    WHERE u.username = '$user';
+  ";
 
                             $result = mysqli_query($conn, $sql);
 
@@ -293,6 +284,7 @@ echo $user;
                                   $curso = $row["curso"];
                                   $aceite = $row["aceite"];
                                   $estado = ($aceite == 1)? "Aceite" : "Por aceitar";
+                                  $id = $row["id_utilizador"];
 
                                   if($aceite == 0){
                                       echo "

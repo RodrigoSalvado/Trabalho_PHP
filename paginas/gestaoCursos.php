@@ -6,8 +6,7 @@ include "ConstUtilizadores.php";
 session_start();
 
 $user = $_SESSION["user"];
-echo $user;
-
+$tipo = $_SESSION["tipo"];
 
 ?>
 
@@ -132,41 +131,47 @@ echo $user;
         </h2>
         <div class="container">
             <table class="table table-primary table-sortable" role="grid">
-                <thead>
-                <tr>
-                    <th class="text-center header" scope="col" role="columnheader"><span>Nome Curso</span></th>
-                    <th class="text-center header" scope="col" role="columnheader"><span>Docente</span></th>
-                    <th class="text-center header" scope="col" role="columnheader"><span>Vagas Totais</span></th>
-                    <th class="text-center header" scope="col" role="columnheader"><span>Vagas disponiveis</span></th>
-                    <th class="text-center header" scope="col" role="columnheader"><span>Apagar</span></th>
-                    <th class="text-center header" scope="col" role="columnheader"><span>Detalhes</span></th>
-                </tr>
-                </thead>
-                <tbody>
-                <div class="botoes_gest">
+
                     <?php
+                        if($tipo == ADMINISTRADOR){
 
-                    $sql = "SELECT * FROM curso";
-                    $result = mysqli_query($conn, $sql);
+                            echo '
+                            <thead>
+                                <tr>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Nome Curso</span></th>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Docente</span></th>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Vagas Totais</span></th>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Vagas disponiveis</span></th>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Apagar</span></th>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Detalhes</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <div class="botoes_gest">';
 
-                    if(mysqli_num_rows($result)>0){
-                        while($row = mysqli_fetch_assoc($result)){
-
-                            $nome = $row["nome"];
-                            $docente = $row["docente"];
-                            $max_num = $row["max_num"];
-                            $id_curso = $row["id_curso"];
 
 
-                            $sqlVagas = "SELECT COUNT(*) as total FROM util_curso WHERE curso = '$nome' AND aceite = 1";
-                            $resultVagas = mysqli_query($conn, $sqlVagas);
+                            $sql = "SELECT * FROM curso";
+                            $result = mysqli_query($conn, $sql);
 
-                            if(mysqli_num_rows($resultVagas)>0){
-                                $rowVagas = mysqli_fetch_assoc($resultVagas);
-                                $vagas = $max_num - $rowVagas["total"];
-                            }
+                            if(mysqli_num_rows($result)>0){
+                                while($row = mysqli_fetch_assoc($result)){
 
-                            echo "
+                                    $nome = $row["nome"];
+                                    $docente = $row["docente"];
+                                    $max_num = $row["max_num"];
+                                    $id_curso = $row["id_curso"];
+
+
+                                    $sqlVagas = "SELECT COUNT(*) as total FROM util_curso WHERE curso = '$nome' AND aceite = 1";
+                                    $resultVagas = mysqli_query($conn, $sqlVagas);
+
+                                    if(mysqli_num_rows($resultVagas)>0){
+                                        $rowVagas = mysqli_fetch_assoc($resultVagas);
+                                        $vagas = $max_num - $rowVagas["total"];
+                                    }
+
+                                    echo "
                                     <tr>
                                         <td class='text-center'>$nome</td>
                                         <td class='text-center'>$docente</td>
@@ -175,15 +180,75 @@ echo $user;
                                         <td class='text-center'><a href='apagar.php?curso=$nome'><button>Apagar</button></a></td>
                                         <td class='text-center'><a href='gerirDados.php?curso=1&id_curso=$id_curso'><button>Detalhes</button></a></td>
                                     </tr>";
+
+                                }
+                                echo '
+                                        </div>
+                                        </tbody>
+                                    </table>';
+
+                                echo '<a href="criarCurso.php"><button class="btn-curso" style="margin: 20px">Adicionar Curso</button></a>';
+                            }
                         }
-                    }
+                        if($tipo == DOCENTE){
+
+                            echo '
+                            <thead>
+                                <tr>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Nome Curso</span></th>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Docente</span></th>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Vagas Totais</span></th>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Vagas disponiveis</span></th>
+                                    <th class="text-center header" scope="col" role="columnheader"><span>Detalhes</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <div class="botoes_gest">';
+
+
+                            $sql = "SELECT * FROM curso WHERE docente = '$user'";
+                            $result = mysqli_query($conn, $sql);
+
+                            if(mysqli_num_rows($result)>0){
+                                while($row = mysqli_fetch_assoc($result)){
+
+                                    $nome = $row["nome"];
+                                    $docente = $row["docente"];
+                                    $max_num = $row["max_num"];
+                                    $id_curso = $row["id_curso"];
+
+
+                                    $sqlVagas = "SELECT COUNT(*) as total FROM util_curso WHERE curso = '$nome' AND aceite = 1";
+                                    $resultVagas = mysqli_query($conn, $sqlVagas);
+
+                                    if(mysqli_num_rows($resultVagas)>0){
+                                        $rowVagas = mysqli_fetch_assoc($resultVagas);
+                                        $vagas = $max_num - $rowVagas["total"];
+                                    }
+
+                                    echo "
+                                    <tr>
+                                        <td class='text-center'>$nome</td>
+                                        <td class='text-center'>$docente</td>
+                                        <td class='text-center'>$max_num</td>
+                                        <td class='text-center'>$vagas</td>
+                                        <td class='text-center'><a href='gerirDados.php?curso=1&id_curso=$id_curso'><button>Detalhes</button></a></td>
+                                    </tr>";
+
+
+                                }
+                                echo '
+                                        </div>
+                                        </tbody>
+                                    </table>';
+                            }
+                        }
+
                     ?>
 
-                </div>
-                </tbody>
-            </table>
 
-            <a href="criarCurso.php"><button class="btn-curso" style="margin: 20px">Adicionar Curso</button></a>
+
+
         </div>
     </div>
 
