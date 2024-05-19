@@ -1,13 +1,14 @@
 <?php
 include "../basedados/basedados.h";
+include "ConstUtilizadores.php";
 global $conn;
 session_start();
 
+$tipo = $_SESSION["tipo"];
 
-
-
-
-
+if($tipo != ADMINISTRADOR || empty($tipo)){
+    echo "<script>window.alert('Nao tem autorização para entrar aqui') ; window.location.href = 'paginaPrincipal.php';</script>";
+}
 
 
 ?>
@@ -290,13 +291,11 @@ session_start();
 <?php
 
 if(isset($_POST["botao"])){
-    echo "entrou";
 
     $docente = $_POST["docente"];
     $nome = $_POST["nome"];
     $descricao = $_POST["descricao"];
     $max_num = $_POST["max_num"];
-
 
     $sql = "INSERT INTO curso(docente, nome, descricao, max_num) VALUES ('$docente', '$nome', '$descricao', '$max_num')";
     $result = mysqli_query($conn, $sql);

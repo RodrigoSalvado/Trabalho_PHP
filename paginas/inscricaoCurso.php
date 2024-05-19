@@ -1,11 +1,16 @@
 <?php
 include "../basedados/basedados.h";
+include "ConstUtilizadores.php";
 global $conn;
 session_start();
 
-$id_curso = $_GET["id"];
+$tipo = $_SESSION["tipo"];
+if($tipo == CLIENTE || empty($tipo)){
+    echo "<script>window.alert('Nao tem autorização para entrar aqui') ; window.location.href = 'paginaPrincipal.php';</script>";
+}
 
-echo $id_curso;
+
+$id_curso = $_GET["id"];
 
 $sql = "SELECT docente, nome FROM curso WHERE id_curso = '$id_curso'";
 $result = mysqli_query($conn, $sql);

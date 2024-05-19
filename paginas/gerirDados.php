@@ -4,10 +4,17 @@ include "ConstUtilizadores.php";
 global $conn;
 session_start();
 
+
+
 try{
+    $tipo = $_SESSION["tipo"];
+    if($tipo == CLIENTE || empty($tipo)){
+        echo "<script>window.alert('Nao tem autorização para entrar aqui') ; window.location.href = 'paginaPrincipal.php';</script>";
+    }
+
     $curso = isset($_GET["curso"])? 1: 0;
     $utilizador = isset($_GET["utilizador"])? 1: 0;
-    $tipo = $_SESSION["tipo"];
+
 }catch(Exception $e){
 
 }

@@ -6,8 +6,10 @@ include "ConstUtilizadores.php";
 session_start();
 
 $user = $_SESSION["user"];
-echo $user;
-
+$tipo = $_SESSION["tipo"];
+if($tipo != ADMINISTRADOR || empty($tipo)){
+    echo "<script>window.alert('Nao tem autorização para entrar aqui') ; window.location.href = 'paginaPrincipal.php';</script>";
+}
 
 ?>
 

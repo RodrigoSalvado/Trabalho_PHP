@@ -9,6 +9,10 @@ session_start();
 $tipoUser = $_SESSION["tipo"];
 $user = $_SESSION["user"];
 
+if($tipoUser == CLIENTE || empty($tipo)){
+    echo "<script>window.alert('Nao tem autorização para entrar aqui') ; window.location.href = 'paginaPrincipal.php';</script>";
+}
+
 $sql = "SELECT id_utilizador FROM utilizador WHERE username = '$user'";
 $result = mysqli_query($conn, $sql);
 

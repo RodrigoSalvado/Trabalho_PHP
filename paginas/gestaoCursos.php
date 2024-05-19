@@ -8,6 +8,10 @@ session_start();
 $user = $_SESSION["user"];
 $tipo = $_SESSION["tipo"];
 
+if($tipo == CLIENTE || $tipo == ALUNO || empty($tipo)){
+    echo "<script>window.alert('Nao tem autorização para entrar aqui') ; window.location.href = 'paginaPrincipal.php';</script>";
+}
+
 ?>
 
 

@@ -21,7 +21,6 @@ if(mysqli_num_rows($result)>0){
 
 function printCursos($curso, $img, $sessao){
 
-
     if($sessao){
         echo '
           <div class="col-md-4 ">
