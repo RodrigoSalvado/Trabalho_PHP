@@ -186,16 +186,16 @@ if($tipo == CLIENTE || $tipo == ALUNO || empty($tipo)){
                                     </tr>";
 
                                 }
-                                echo '
+
+                            }
+                            echo '
                                         </div>
                                         </tbody>
                                     </table>';
 
-                                echo '<a href="criarCurso.php"><button class="btn-curso" style="margin: 20px">Adicionar Curso</button></a>';
-                            }
+                            echo '<a href="criarCurso.php"><button class="btn-curso" style="margin: 20px">Adicionar Curso</button></a>';
                         }
                         if($tipo == DOCENTE){
-
                             echo '
                             <thead>
                                 <tr>
@@ -208,6 +208,7 @@ if($tipo == CLIENTE || $tipo == ALUNO || empty($tipo)){
                             </thead>
                             <tbody>
                             <div class="botoes_gest">';
+
 
 
                             $sql = "SELECT * FROM curso WHERE docente = '$user'";
@@ -239,13 +240,15 @@ if($tipo == CLIENTE || $tipo == ALUNO || empty($tipo)){
                                         <td class='text-center'><a href='gerirDados.php?curso=1&id_curso=$id_curso'><button>Detalhes</button></a></td>
                                     </tr>";
 
-
                                 }
-                                echo '
+
+
+
+                            }
+                            echo '
                                         </div>
                                         </tbody>
                                     </table>';
-                            }
                         }
 
                     ?>

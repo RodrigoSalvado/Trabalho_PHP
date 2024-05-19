@@ -2,7 +2,6 @@
 <head>
     <style>
         body{
-            background-image:url(../media/imgs_sistema/fundoLogin.jpg);
             background-position: top center;
         }
 
@@ -99,8 +98,8 @@ echo "
   <!--=====================Login=====================-->
 		<form action='".$dir."'>
 			<div id='acoes'>
-				<input type='submit' value ='".$btn."'>
-				<div id = 'registo'><a href='./login.html'>Registe-se...</a></div>
+				<input type='submit' value ='".$btn. "'>
+				<div id = 'registo'><a href='login.html'>Registe-se...</a></div>
 			</div>
 		</form>";
 
