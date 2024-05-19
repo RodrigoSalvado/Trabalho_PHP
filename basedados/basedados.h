@@ -17,6 +17,5 @@
 	   exit;
 	}
 
-	echo "Ligação à bd com sucesso<hr>";
 
 ?>

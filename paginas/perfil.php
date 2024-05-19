@@ -55,7 +55,7 @@ if($result){
     <meta name="author" content="" />
     <link rel="shortcut icon" href="favicon.png" type="">
 
-    <title> Finexo </title>
+    <title> Crypto Academy </title>
 
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="bootstrap.css" />
@@ -92,7 +92,7 @@ if($result){
             <nav class="navbar navbar-expand-lg custom_nav-container ">
                 <a class="navbar-brand" href="paginaPrincipal.php">
             <span>
-              Finexo
+              Crypto Academy
             </span>
                 </a>
 
