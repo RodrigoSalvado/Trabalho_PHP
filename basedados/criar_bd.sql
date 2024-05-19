@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Tempo de geração: 16-Maio-2024 às 23:56
--- Versão do servidor: 10.4.28-MariaDB
--- versão do PHP: 8.2.4
+-- Host: 127.0.0.1
+-- Tempo de geração: 19-Maio-2024 às 19:34
+-- Versão do servidor: 10.4.32-MariaDB
+-- versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,11 +18,8 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `TrabalhoLPI`
+-- Banco de dados: `trabalholpi`
 --
-
-    CREATE DATABASE TrabalhoLPI;
-    USE TrabalhoLPI;
 
 -- --------------------------------------------------------
 
@@ -103,6 +100,7 @@ INSERT INTO `utilizador` (`id_utilizador`, `username`, `password`, `email`, `tip
 
 CREATE TABLE `util_curso` (
                               `id_inscricao` int(11) NOT NULL,
+                              `docente` varchar(100) NOT NULL,
                               `id_utilizador` int(11) NOT NULL,
                               `curso` varchar(100) NOT NULL,
                               `aceite` int(11) NOT NULL
