@@ -5,42 +5,23 @@ global $conn;
 
 session_start();
 
-if(isset($_SESSION["user"])){
-    $user = $_SESSION["user"];
-    echo $user;
-}else{
-    echo "nao iniciou sessao";
-}
-
-//selecionar tipo de utilizador
-$sql = "SELECT tipo_utilizador FROM utilizador WHERE username = '$user'";
-$result = mysqli_query($conn, $sql);
-
-if($result){
-    if(mysqli_num_rows($result) > 0){
-        $row = mysqli_fetch_assoc($result);
-        $tipoUser = $row['tipo_utilizador'];
-    }else{
-        echo "nao foram encontrados dados";
-    }
-}else{
-    echo "erro";
-}
-
-echo "<br>" . $tipoUser;
-$_SESSION["tipo_user"] = $tipoUser;
+$user = isset($_SESSION["user"])? $_SESSION["user"]: Null;
+$cursos = array();
 
 //informacoes dos cursos
-function printCursos($id_curso, $img, $conn, $sessao){
 
-    $sql = "SELECT nome, descricao FROM curso WHERE id_curso = '$id_curso'";
-    $result = mysqli_query($conn, $sql);
+$sql = "SELECT nome, descricao, id_curso FROM curso ";
+$result = mysqli_query($conn, $sql);
 
-    if(mysqli_num_rows($result)>0){
-        $row = mysqli_fetch_assoc($result);
-        $nome = $row["nome"];
-        $desc = $row["descricao"];
+if(mysqli_num_rows($result)>0){
+    while($row = mysqli_fetch_assoc($result)){
+        $cursos[] = $row;
     }
+
+}
+
+function printCursos($curso, $img, $sessao){
+
 
     if($sessao){
         echo '
@@ -52,12 +33,12 @@ function printCursos($id_curso, $img, $conn, $sessao){
                  <div class="detail-box">
                 
                     <h5>
-                        '.$nome.'
+                        '.$curso['nome'].'
                     </h5>
                     <p>
-                        '.$desc.'
+                        '.$curso['descricao'].'
                     </p>
-                        <a href="inscricaoCurso.php?id='.$id_curso.'">
+                        <a href="inscricaoCurso.php?id='.$curso['id_curso'].'">
                             Inscreva-se!
                         </a>
                  </div>
@@ -73,10 +54,10 @@ function printCursos($id_curso, $img, $conn, $sessao){
                  <div class="detail-box">
                 
                     <h5>
-                        '.$nome.'
+                        '.$curso['nome'].'
                     </h5>
                     <p>
-                        '.$desc.'
+                        '.$curso['descricao'].'
                     </p>
                         <a href="login.html">
                             Inicie sessão para se increver no nosso curso!
@@ -265,7 +246,7 @@ function printCursos($id_curso, $img, $conn, $sessao){
           <?php
             $sql = "SELECT *, COUNT(*) as total FROM curso";
             $result = mysqli_query($conn, $sql);
-
+            $count = 0;
 
             if(mysqli_num_rows($result)>0) {
                 $row = mysqli_fetch_assoc($result);
@@ -274,10 +255,12 @@ function printCursos($id_curso, $img, $conn, $sessao){
                     if ($i % 3 == 0) {
                         echo '<div class="row">';
                     }
-                    echo printCursos($i -2, ($i%3)+1, $conn, isset($_SESSION["user"]));
+                    $curso = $cursos[$count];
+                    echo printCursos($curso, ($i%3)+1, isset($_SESSION["user"]));
                     if ($i % 3 == 2) {
                         echo '</div>';
                     }
+                    $count++;
                 }
 
 

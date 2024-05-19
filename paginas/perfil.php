@@ -6,10 +6,7 @@ global $conn;
 
 session_start();
 
-$tipoUser = $_SESSION["tipo_user"];
-
-echo $_SESSION["user"] . "<br>";
-echo $tipoUser;
+$tipoUser = $_SESSION["tipo"];
 
 $sql = "SELECT cargo FROM tipo_utilizador WHERE id = '$tipoUser'";
 $result = mysqli_query($conn, $sql);
