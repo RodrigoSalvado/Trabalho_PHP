@@ -7,6 +7,14 @@ include "./ConstUtilizadores.php";
 $user = isset($_GET["user"])? $_GET["user"]:Null;
 $curso = isset($_GET["curso"])? $_GET["curso"]:Null;
 
+$sql = "SELECT id_curso FROM curso WHERE nome = '$curso'";
+$result = mysqli_query($conn, $sql);
+
+if(mysqli_num_rows($result)>0){
+    $row = mysqli_fetch_assoc($result);
+    $id_curso = $row["id_curso"];
+}
+
 
 
 if(isset($user)){
@@ -19,27 +27,38 @@ if(isset($user)){
         $id = $row["id_utilizador"];
     }
 
-    switch ($tipoUtilizador){
-        case ALUNO:
-            $sql = "DELETE FROM utilizador WHERE id_utilizador = '$id'";
-            mysqli_query($conn, $sql);
+    if($tipoUtilizador == ALUNO){
+        $sql = "DELETE FROM utilizador WHERE id_utilizador = '$id'";
+        mysqli_query($conn, $sql);
 
-            $sql = "DELETE FROM util_curso WHERE id_utilizador = '$id'";
-            mysqli_query($conn, $sql);
+        $sql = "DELETE FROM util_curso WHERE id_utilizador = '$id'";
+        mysqli_query($conn, $sql);
 
-            echo "<script>alert('Utilizador ".$user." Apagado')</script>";
-            break;
+        echo "<script>window.alert('Utilizador ".$user." Apagado') ; window.location.href = 'gestaoUtilizadores.php';</script>";
+    }
 
-        case DOCENTE||ADMINISTRADOR:
-            $sql = "DELETE FROM utilizador WHERE id_utilizador = '$id'";
-            mysqli_query($conn, $sql);
+    if($tipoUtilizador == DOCENTE || $tipoUtilizador == ADMINISTRADOR){
+        $sql = "SELECT id_curso FROM curso WHERE docente = '$user'";
+        $result = mysqli_query($conn, $sql);
 
-            $sql = "UPDATE curso SET docente = '' WHERE docente = '$user'";
-            mysqli_query($conn, $sql);
+        if(mysqli_num_rows($result)>0){
+            $row = mysqli_fetch_assoc($result);
+            $id_curso = $row["id_curso"];
+        }
 
-            echo "<script>alert('Utilizador ".$user." Apagado')</script>";
-            break;
+        $sql = "UPDATE curso SET docente = '' WHERE docente = '$user'";
+        mysqli_query($conn, $sql);
 
+        $sql = "DELETE FROM utilizador WHERE id_utilizador = '$id'";
+        mysqli_query($conn, $sql);
+
+        echo "<script>window.alert('Utilizador ".$user." Apagado') ; window.location.href = 'gerirDados.php?curso=1&id_curso=$id_curso';</script>";
+    }
+
+    if($tipoUtilizador == CLIENTE){
+        $sql = "DELETE FROM utilizador WHERE id_utilizador = '$id'";
+        mysqli_query($conn, $sql);
+        echo "<script>window.alert('Cliente ".$user." Apagado') ; window.location.href = 'gestaoUtilizadores.php';</script>";
     }
 }
 

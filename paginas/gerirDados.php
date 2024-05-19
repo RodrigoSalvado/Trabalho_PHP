@@ -3,34 +3,70 @@ include "../basedados/basedados.h";
 global $conn;
 session_start();
 
-if(isset($_GET["id"])){
-    $id_utilizador = $_GET["id"];
+try{
+    $curso = isset($_GET["curso"])? 1: 0;
+    $utilizador = isset($_GET["utilizador"])? 1: 0;
+}catch(Exception $e){
+
 }
 
-//se for o proprio utilizador a aceder a pagina
-if(isset($_SESSION["user"])){
-    $username = $_SESSION["user"];
-    $sqlS = "SELECT email FROM utilizador WHERE username = '$username'";
-    $resultS = mysqli_query($conn, $sqlS);
+if($utilizador==1){
 
-    if ($resultS && mysqli_num_rows($resultS) > 0) {
-        $row = mysqli_fetch_assoc($resultS);
-        $email = $row["email"];
+
+    //se for o proprio utilizador a aceder a pagina
+    if(isset($_SESSION["user"])){
+        $username = $_SESSION["user"];
+        $sqlS = "SELECT email FROM utilizador WHERE username = '$username'";
+        $resultS = mysqli_query($conn, $sqlS);
+
+        if ($resultS && mysqli_num_rows($resultS) > 0) {
+            $row = mysqli_fetch_assoc($resultS);
+            $email = $row["email"];
+        }
+    }
+
+    //se for o admin a aceder aos dados do utilizador
+    if(isset($_GET["id"])){
+        $id_utilizador = $_GET["id"];
+    }
+
+    $sql = "SELECT username, email, id_utilizador, password FROM utilizador WHERE id_utilizador = '$id_utilizador'";
+    $result = mysqli_query($conn, $sql);
+
+    if($result && mysqli_num_rows($result) > 0){
+        while($row = mysqli_fetch_assoc($result)){
+            $username = $row["username"];
+            $email = $row["email"];
+            $id_utilizador = $row["id_utilizador"];
+            $pass = $row["password"];
+        }
     }
 }
 
-//se for o admin a aceder aos dados do utilizador
-$sql = "SELECT username, email, id_utilizador, password FROM utilizador WHERE id_utilizador = '$id_utilizador'";
-$result = mysqli_query($conn, $sql);
+if($curso==1){
+    $id_curso = $_GET["id_curso"];
+    $sql = "SELECT * FROM curso WHERE id_curso = '$id_curso'";
+    $result = mysqli_query($conn, $sql);
 
-if($result && mysqli_num_rows($result) > 0){
-    while($row = mysqli_fetch_assoc($result)){
-        $username = $row["username"];
-        $email = $row["email"];
-        $id_utilizador = $row["id_utilizador"];
-        $pass = $row["password"];
+    if(mysqli_num_rows($result)>0){
+        $row = mysqli_fetch_assoc($result);
+
+        $nome = $row["nome"];
+        $docente = $row["docente"];
+        $desc = $row["descricao"];
+        $max_num = $row["max_num"];
     }
+
+    $sqlInscritos = "SELECT COUNT(*) as total FROM util_curso WHERE curso = '$nome'";
+    $resultInscritos = mysqli_query($conn, $sqlInscritos);
+
+    if(mysqli_num_rows($resultInscritos)>0){
+        $rowInscritos = mysqli_fetch_assoc($resultInscritos);
+        $inscritos = $rowInscritos["total"];
+    }
+
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -95,23 +131,40 @@ if($result && mysqli_num_rows($result) > 0){
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav  ">
-                        <li class="nav-item ">
-                            <a class="nav-link" href="paginaPrincipal.php">Home </a>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="paginaPrincipal.php">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="about.html"> About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="cursos.php">Services</a>
+                            <a class="nav-link" href="cursos.php">Cursos</a>
                         </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="why.html">Why Us <span class="sr-only">(current)</span> </a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="why.html">Why Us</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="team.html">Team</a>
                         </li>
+
+                        <?php
+                        if(isset($_SESSION["user"])){
+                            echo '
+                                <li class="nav-item">
+                                    <a class="nav-link" href="perfil.php">Perfil</a>
+                                </li>
+                             ';
+                        }
+                        ?>
+
                         <li class="nav-item">
-                            <a class="nav-link" href="#"> <i class="fa fa-user" aria-hidden="true"></i> Login</a>
+                            <?php
+                            if(isset($_SESSION["user"])){
+                                echo '<a class="nav-link" href="logout.php"> <i class="fa fa-user" aria-hidden="true"></i> Logout</a>';
+                            }else{
+                                echo '<a class="nav-link" href="login.html"> <i class="fa fa-user" aria-hidden="true"></i> Login</a>';
+                            }
+                            ?>
                         </li>
                         <form class="form-inline">
                             <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
@@ -128,31 +181,84 @@ if($result && mysqli_num_rows($result) > 0){
 
 <!-- alterar dados -->
 
-<div class="container-inscricao">
-    <div class="informacoes">
-        <form action="alterar.php" method="post" >
-            <input type="hidden" name="nomeUser" value="<?php echo $id_utilizador?>">
-            <br>
-            <h3>Alterar informações pessoais</h3>
-            <br><br>
-            <label>Username: <?php echo $username ?></label>
-            <br>
-            <input type="text" name="username" placeholder="Novo username" value="<?php echo $username?>" class="inp">
-            <br><br>
-            <label>Email: <?php echo $email ?></label>
-            <br>
-            <input type="email" name="email" placeholder="Novo email" value="<?php echo $email?>" class="inp">
-            <br><br>
-            <label>Password: <?php echo "**********" ?></label>
-            <br>
-            <input type="text" name="pass" placeholder="Nova password"  value="<?php echo $pass?>" class="inp">
-            <br><br><br>
-            <input type="submit" value="Alterar dados" name="botao">
-            <br><br>
-        </form>
+<?php
 
-    </div>
-</div>
+if($utilizador==1){
+    echo '
+        <div class="container-inscricao">
+            <div class="informacoes">
+                <form action="alterar.php?utilizador='.$utilizador.'" method="post" >
+                    <input type="hidden" name="nomeUser" value="'.$id_utilizador.'">
+                    <br>
+                    <h3>Alterar informações pessoais</h3>
+                    <br><br>
+                    <label>Username:  '.$username.' </label>
+                    <br>
+                    <input type="text" name="username" placeholder="Novo username" value="'.$username.'" class="inp">
+                    <br><br>
+                    <label>Email: '.$email.'</label>
+                    <br>
+                    <input type="email" name="email" placeholder="Novo email" value="'.$email.'" class="inp">
+                    <br><br>
+                    <label>Password: ********** </label>
+                    <br>
+                    <input type="text" name="pass" placeholder="Nova password"  value="'.$pass.'" class="inp">
+                    <br><br><br>
+                    <input type="submit" value="Alterar dados" name="botao">
+                    <br><br>
+                </form>
+            </div>
+        </div>
+    ';
+}
+
+if($curso==1){
+    echo '
+        <div class="container-inscricao">
+            <div class="informacoes">
+                <form action="alterar.php?curso=1&id_curso='.$id_curso.'" method="post" >
+                    <br>
+                    <h3>Alterar Informações do Curso</h3>
+                    <br><br>
+                    <label>Nome: '.$nome.'</label>
+                    <br>
+                    <input type="text" name="nome" placeholder="Nome do curso..." value="'.$nome.'" class="inp" required>
+                    <br><br>
+                    <label>Docente: '.$docente.'</label>
+                    <br>
+                    <select name="docente" class="inp" required>';
+                        $sql = "SELECT username FROM utilizador WHERE tipo_utilizador = 3 OR tipo_utilizador = 4";
+                        $result = mysqli_query($conn, $sql);
+                        echo "<option>$docente</option>";
+                        if(mysqli_num_rows($result)>0){
+                            while($row = mysqli_fetch_assoc($result)){
+                                if(strcmp($row["username"],$docente)!=0){
+                                    echo "<option value='".$row['username']."'>".$row['username']."</option>";
+                                }
+
+                            }
+                        }
+                    echo'</select>
+                    <br><br>
+                    <label>Descrição do Curso:</label>
+                    <br>
+                    <textarea type="text" name="descricao" placeholder="Descrição do curso..." class="inp" required>'.$desc.'</textarea>
+                    <br><br>
+                    <label>Numero vagas: '.($max_num - $inscritos).'</label><br>
+                    <label>Numero inscritos: '.$inscritos.'</label>
+                    <br>
+                    <input type="number" min="'.$inscritos.'" step="1" name="max_num" placeholder="Insira número de vagas..." value="'.$max_num.'" class="inp" required>
+                    <br><br><br>
+                    <input type="submit" value="Alterar Curso" name="botao">
+                    <br><br>
+                </form>
+            </div>
+        </div>
+    ';
+}
+
+
+?>
 
 <!-- info section -->
 

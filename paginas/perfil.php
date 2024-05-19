@@ -133,7 +133,7 @@ if($result){
                 //adimn
                 if($tipoUser== ADMINISTRADOR){
                     echo ' <div class="botoes">
-                <a href="gerirDados.php">
+                <a href="gerirDados.php?utilizador=1">
                     <button>Gerir dados pessoais</button><br>
                 </a>
                 <a href="gestaoUtilizadores.php">
@@ -149,7 +149,7 @@ if($result){
                 //docente
                 }elseif ($tipoUser == DOCENTE){
                     echo ' <div class="botoes">
-                <a href="gerirDados.php">
+                <a href="gerirDados.php?utilizador=1">
                     <button>Gerir dados pessoais</button><br>
                 </a>
                 <a href="gestaoInscricoes.php">
@@ -159,7 +159,7 @@ if($result){
                 //aluno
                 }elseif ($tipoUser == ALUNO){
                     echo ' <div class="botoes">
-                <a href="gerirDados.php">
+                <a href="gerirDados.php?utilizador=1">
                     <button>Gerir dados pessoais</button><br>
                 </a>
                 <a href="gestaoInscricoes.php">
