@@ -52,7 +52,10 @@ if(isset($user)){
         $sql = "DELETE FROM utilizador WHERE id_utilizador = '$id'";
         mysqli_query($conn, $sql);
 
-        echo "<script>window.alert('Utilizador ".$user." Apagado') ; window.location.href = 'gerirDados.php?curso=1&id_curso=$id_curso';</script>";
+        if(isset($id_curso)){
+            echo "<script>window.alert('Utilizador ".$user." Apagado') ; window.location.href = 'gerirDados.php?curso=1&id_curso=$id_curso';</script>";
+        }
+        echo "<script>window.alert('Utilizador ".$user." Apagado') ; window.location.href = 'gestaoUtilizadores.php';</script>";
     }
 
     if($tipoUtilizador == CLIENTE){
