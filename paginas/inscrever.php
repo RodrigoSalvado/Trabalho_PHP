@@ -57,10 +57,10 @@ if(mysqli_num_rows($resultCount)>0){
                 echo "<script>window.alert('erro') ; window.location.href = 'pagina_principal.php';</script>";
             }
         }else{
-            echo "<script>alert('Já fez uma inscrição para este curso!'); window.location.href = 'pagina_principal.php';</script>";
+            echo "<script>alert('Já fez uma inscrição para este curso!'); window.location.href = 'paginaPrincipal.php';</script>";
         }
     }else{
-        echo "<script>alert('Não há mais vagas para este curso!'); window.location.href = 'pagina_principal.php';</script>";
+        echo "<script>alert('Não há mais vagas para este curso!'); window.location.href = 'paginaPrincipal.php';</script>";
     }
 }
 
