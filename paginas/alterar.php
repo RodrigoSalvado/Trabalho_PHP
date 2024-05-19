@@ -188,9 +188,14 @@ if($curso == 1){
             }
         }
         if(isset($novoMaxNum)){
-            $sql = "UPDATE curso SET max_num = '$novoMaxNum' WHERE id_curso = '$id_curso'";
-            mysqli_query($conn, $sql);
-            $alterado = true;
+
+            if($novoMaxNum <= 0){
+                echo "<script>window.alert('Aumente o limite de inscrições!') ; window.location.href = 'gerirDados.php?curso=1&id_curso=".$id_curso."';</script>";
+            }else{
+                $sql = "UPDATE curso SET max_num = '$novoMaxNum' WHERE id_curso = '$id_curso'";
+                mysqli_query($conn, $sql);
+                $alterado = true;
+            }
         }
 
         if ($alterado){

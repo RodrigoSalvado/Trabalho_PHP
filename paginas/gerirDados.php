@@ -279,17 +279,17 @@ if($curso==1){
                     <label>Docente: '.$docente.'</label>
                     <br>
                     <select name="docente" class="inp" hidden>';
-       $sql = "SELECT username FROM utilizador WHERE tipo_utilizador = 3 OR tipo_utilizador = 4";
-       $result = mysqli_query($conn, $sql);
-       echo "<option>$docente</option>";
-       if(mysqli_num_rows($result)>0){
-           while($row = mysqli_fetch_assoc($result)){
-               if(strcmp($row["username"],$docente)!=0){
-                   echo "<option value='".$row['username']."'>".$row['username']."</option>";
-               }
+                       $sql = "SELECT username FROM utilizador WHERE tipo_utilizador = 3 OR tipo_utilizador = 4";
+                       $result = mysqli_query($conn, $sql);
+                       echo "<option>$docente</option>";
+                       if(mysqli_num_rows($result)>0){
+                           while($row = mysqli_fetch_assoc($result)){
+                               if(strcmp($row["username"],$docente)!=0){
+                                   echo "<option value='".$row['username']."'>".$row['username']."</option>";
+                               }
 
-           }
-       }
+                           }
+                       }
        echo'</select>
                     <br><br>
                     <label>Descrição do Curso:<br> '.$desc.'</label>
