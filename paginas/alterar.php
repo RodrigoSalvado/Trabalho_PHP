@@ -8,21 +8,28 @@ try{
     $alterado = false;
     $curso = isset($_GET["curso"])? 1: 0;
     $utilizador = isset($_GET["utilizador"])? 1:0;
+    $user = $_SESSION["user"];
 }catch(Exception $e){
 
 }
 
 if($utilizador == 1){
-    $userLogado = $_SESSION["user"];
 
-    $sql = "SELECT tipo_utilizador FROM utilizador WHERE username = '$userLogado'";
+    $id_utilizador = isset($_POST["nomeUser"])? $_POST["nomeUser"]: -1;
+
+    $sql = "SELECT tipo_utilizador FROM utilizador WHERE id_utilizador = '$id_utilizador'";
     $result = mysqli_query($conn, $sql);
     if(mysqli_num_rows($result)){
         $row = mysqli_fetch_assoc($result);
         $tipo = $row["tipo_utilizador"];
     }
 
-    $id_utilizador = isset($_POST["nomeUser"])? $_POST["nomeUser"]: -1;
+    $sql = "SELECT tipo_utilizador FROM utilizador WHERE username = '$user'";
+    $result = mysqli_query($conn, $sql);
+    if(mysqli_num_rows($result)){
+        $row = mysqli_fetch_assoc($result);
+        $tipoSessao = $row["tipo_utilizador"];
+    }
 
     $sql = "SELECT username, email, id_utilizador, password FROM utilizador WHERE id_utilizador = '$id_utilizador'";
     $result = mysqli_query($conn, $sql);
@@ -71,9 +78,10 @@ if($utilizador == 1){
         }
 
         if ($alterado){
-            if($tipo == ADMINISTRADOR){
+            echo $tipo;
+            if($tipo != ADMINISTRADOR && $tipoSessao == ADMINISTRADOR){
                 echo "<script>window.alert('Dados alterados com sucesso') ; window.location.href = 'gestaoUtilizadores.php';</script>";
-            }else if($tipo == ALUNO){
+            }else{
                 echo "<script>window.alert('Dados alterados com sucesso!') ; window.location.href = 'login.html';</script>";
             }
         }else{

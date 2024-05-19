@@ -11,8 +11,6 @@ try{
 }
 
 if($utilizador==1){
-
-
     //se for o proprio utilizador a aceder a pagina
     if(isset($_SESSION["user"])){
         $username = $_SESSION["user"];

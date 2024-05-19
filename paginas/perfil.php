@@ -7,6 +7,18 @@ global $conn;
 session_start();
 
 $tipoUser = $_SESSION["tipo"];
+$user = $_SESSION["user"];
+
+$sql = "SELECT id_utilizador FROM utilizador WHERE username = '$user'";
+$result = mysqli_query($conn, $sql);
+
+if($result){
+    if(mysqli_num_rows($result) > 0){
+        $row = mysqli_fetch_assoc($result);
+        $id_utilizador = $row["id_utilizador"];
+    }
+}
+
 
 $sql = "SELECT cargo FROM tipo_utilizador WHERE id = '$tipoUser'";
 $result = mysqli_query($conn, $sql);
@@ -17,6 +29,11 @@ if($result){
         $cargo = $row["cargo"];
     }
 }
+
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -142,7 +159,7 @@ if($result){
                 //adimn
                 if($tipoUser== ADMINISTRADOR){
                     echo ' <div class="botoes">
-                <a href="gerirDados.php?utilizador=1">
+                <a href="gerirDados.php?utilizador=1&id='.$id_utilizador.'">
                     <button>Gerir dados pessoais</button><br>
                 </a>
                 <a href="gestaoUtilizadores.php">
@@ -168,7 +185,7 @@ if($result){
                 //aluno
                 }elseif ($tipoUser == ALUNO){
                     echo ' <div class="botoes">
-                <a href="gerirDados.php?utilizador=1">
+                <a href="gerirDados.php?utilizador=1&id='.$id_utilizador.'">
                     <button>Gerir dados pessoais</button><br>
                 </a>
                 <a href="gestaoInscricoes.php">
