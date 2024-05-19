@@ -51,7 +51,7 @@ if($utilizador == 1){
                 echo $novoEmail."<br>";
             }
 
-            if(isset($_POST["pass"]) && strcmp($_POST["passOriginal"], $pass) != 0){
+            if(isset($_POST["pass"]) && strcmp($_POST["pass"], $pass) != 0){
                 $novaPass = md5($_POST["pass"]);
                 echo $novaPass."<br>";
             }
@@ -169,5 +169,5 @@ if($curso == 1){
 
     }
 }
-
+mysqli_close($conn);
 ?>

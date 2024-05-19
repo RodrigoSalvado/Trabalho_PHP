@@ -680,3 +680,7 @@ function printCursos($curso, $img, $sessao){
 </body>
 
 </html>
+
+<?php
+
+mysqli_close($conn);

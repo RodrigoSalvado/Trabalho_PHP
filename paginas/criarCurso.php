@@ -303,3 +303,5 @@ if(isset($_POST["botao"])){
     echo "<script>alert('Curso Criado!')</script>";
     header("Location: gestaoCursos.php");
 }
+
+mysqli_close($conn);

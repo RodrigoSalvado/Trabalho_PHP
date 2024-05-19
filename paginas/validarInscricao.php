@@ -21,3 +21,4 @@ if($validado == 1){
 
     header("Location: gestaoInscricoes.php");
 }
+mysqli_close($conn);

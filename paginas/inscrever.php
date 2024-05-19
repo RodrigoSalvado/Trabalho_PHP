@@ -66,6 +66,6 @@ if(mysqli_num_rows($resultCount)>0){
 
 
 
-
+mysqli_close($conn);
 
 ?>

@@ -200,8 +200,7 @@ if($utilizador==1){
                     <br><br>
                     <label>Password: ********** </label>
                     <br>
-                    <input type="password" name="pass" placeholder="Nova password"  value="'.$pass.'" class="inp">
-                    <input type="hidden" name="passOriginal"  value="'.$pass.'" class="inp">
+                    <input type="text" name="pass" placeholder="Nova password"  value="'.$pass.'" class="inp">
                     <br><br><br>
                     <input type="submit" value="Alterar dados" name="botao">
                     <br><br>
@@ -377,3 +376,6 @@ if($curso==1){
 </body>
 
 </html>
+<?php
+
+mysqli_close($conn);

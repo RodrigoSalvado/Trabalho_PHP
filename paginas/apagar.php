@@ -61,6 +61,7 @@ if(isset($user)){
     if($tipoUtilizador == CLIENTE){
         $sql = "DELETE FROM utilizador WHERE id_utilizador = '$id'";
         mysqli_query($conn, $sql);
+
         echo "<script>window.alert('Cliente ".$user." Apagado') ; window.location.href = 'gestaoUtilizadores.php';</script>";
     }
 }
@@ -74,3 +75,6 @@ if(isset($curso)){
 
     echo "<script>alert('Curso ".$curso." Apagado')</script>";
 }
+
+
+mysqli_close($conn);

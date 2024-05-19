@@ -10,3 +10,5 @@ $sql = "INSERT INTO `utilizador`(`username`, `password`, `email`) VALUES ('$user
 //echo $sql;
 $res = mysqli_query ($conn, $sql);
 header ("Location:./paginaPrincipal.php");
+
+mysqli_close($conn);

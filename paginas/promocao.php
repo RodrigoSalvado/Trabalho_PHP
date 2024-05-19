@@ -62,3 +62,5 @@ if($promover == 1){
             break;
     }
 }
+
+mysqli_close($conn);
