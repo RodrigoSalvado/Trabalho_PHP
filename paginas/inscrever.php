@@ -7,8 +7,6 @@ $user = $_SESSION["user"] ;
 
 $nomeCurso = $_POST['nome'];
 
-
-
 $sql = "SELECT id_utilizador FROM utilizador WHERE username = '$user'";
 $result = mysqli_query($conn, $sql);
 if($result && mysqli_num_rows($result) > 0){
@@ -52,7 +50,7 @@ if(mysqli_num_rows($resultCount)>0){
         $resultVerf = mysqli_query($conn, $sqlVerf);
 
         if(mysqli_num_rows($resultVerf) == 0){ // Se ainda nao se tinha inscrito
-            $sqlInsert = "INSERT INTO util_curso (id_utilizador, curso, aceite) VALUES ('$id_user', '$nomeCurso', 0)";
+            $sqlInsert = "INSERT INTO util_curso (docente, id_utilizador, curso, aceite) VALUES ('$docente', '$id_user', '$nomeCurso', 0)";
             $resultInsert = mysqli_query($conn, $sqlInsert);
 
             if($resultInsert){
