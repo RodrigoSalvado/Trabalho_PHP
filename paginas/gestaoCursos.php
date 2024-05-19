@@ -158,7 +158,7 @@ echo $user;
                             $id_curso = $row["id_curso"];
 
 
-                            $sqlVagas = "SELECT COUNT(*) as total FROM util_curso WHERE curso = '$nome'";
+                            $sqlVagas = "SELECT COUNT(*) as total FROM util_curso WHERE curso = '$nome' AND aceite = 1";
                             $resultVagas = mysqli_query($conn, $sqlVagas);
 
                             if(mysqli_num_rows($resultVagas)>0){

@@ -3,13 +3,13 @@ include "../basedados/basedados.h";
 global $conn;
 session_start();
 
-$username = $_SESSION["user"] ;
+$user = $_SESSION["user"] ;
 
 $nomeCurso = $_POST['nome'];
-echo $nomeCurso;
 
 
-$sql = "SELECT id_utilizador FROM utilizador WHERE username = '$username'";
+
+$sql = "SELECT id_utilizador FROM utilizador WHERE username = '$user'";
 $result = mysqli_query($conn, $sql);
 if($result && mysqli_num_rows($result) > 0){
     $row = mysqli_fetch_assoc($result);
@@ -28,12 +28,17 @@ if(mysqli_num_rows($resultCount)>0){
     $row = mysqli_fetch_assoc($resultCount);
     $total = $row["total"]; // total de utilizadores
 
-    $sqlCurso = "SELECT max_num FROM curso WHERE nome = '$nomeCurso'";
+    $sqlCurso = "SELECT max_num, docente FROM curso WHERE nome = '$nomeCurso'";
     $resultCurso = mysqli_query($conn, $sqlCurso);
 
     if(mysqli_num_rows($resultCurso)>0){
         $row = mysqli_fetch_assoc($resultCurso);
         $max_num = $row["max_num"]; // vagas para o curso
+        $docente = $row["docente"];
+
+        if(strcmp($_SESSION["user"], $docente)==0){
+            echo "<script>window.alert('O docente não pode inscrever-se no seu curso!') ; window.location.href = 'paginaPrincipal.php';</script>";
+        }
     }
 
 

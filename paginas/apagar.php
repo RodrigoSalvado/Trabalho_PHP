@@ -74,6 +74,7 @@ if(isset($curso)){
     mysqli_query($conn, $sql);
 
     echo "<script>alert('Curso ".$curso." Apagado')</script>";
+    echo "<script>window.alert('Cliente ".$user." Apagado') ; window.location.href = 'gestaoCursos.php';</script>";
 }
 
 
