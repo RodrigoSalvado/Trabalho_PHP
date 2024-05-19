@@ -96,12 +96,24 @@ if($result){
                         <li class="nav-item">
                             <a class="nav-link" href="team.html">Team</a>
                         </li>
+                        <?php
+                        if(isset($_SESSION["user"])){
+                            echo '
+                                <li class="nav-item">
+                                    <a class="nav-link" href="perfil.php">Perfil-'.$_SESSION["user"].'</a>
+                                </li>
+                             ';
+                        }
+                        ?>
+
                         <li class="nav-item">
-                            <a class="nav-link" href="perfil.php">Perfil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="logout.php"> <i class="fa fa-user" aria-hidden="true"></i> Logout</a>
-                        </li>
+                            <?php
+                            if(isset($_SESSION["user"])){
+                                echo '<a class="nav-link" href="logout.php"> <i class="fa fa-user" aria-hidden="true"></i> Logout</a>';
+                            }else{
+                                echo '<a class="nav-link" href="login.html"> <i class="fa fa-user" aria-hidden="true"></i> Login</a>';
+                            }
+                            ?>
 
                         <form class="form-inline">
                             <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">

@@ -94,7 +94,7 @@ echo $user;
                             if(isset($_SESSION["user"])){
                                 echo '
                                 <li class="nav-item">
-                                    <a class="nav-link" href="perfil.php">Perfil</a>
+                                    <a class="nav-link" href="perfil.php">Perfil-'.$_SESSION["user"].'</a>
                                 </li>
                              ';
                             }
