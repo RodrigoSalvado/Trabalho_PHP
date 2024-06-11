@@ -48,10 +48,7 @@ if(mysqli_num_rows($resultCount)>0){
     if($total<$max_num){ // ve se ha vagas
 
         // Verifica se o aluno ja fez algum registo
-        $sqlVerf = "SELECT *
-            FROM util_curso
-            WHERE id_utilizador = '$id_user'
-            AND curso = '$nomeCurso'";
+        $sqlVerf = "SELECT * FROM util_curso WHERE id_utilizador = '$id_user' AND curso = '$nomeCurso'";
         $resultVerf = mysqli_query($conn, $sqlVerf);
 
         if(mysqli_num_rows($resultVerf) == 0){ // Se ainda nao se tinha inscrito
