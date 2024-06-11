@@ -4,6 +4,13 @@ include "../basedados/basedados.h";
 include "ConstUtilizadores.php";
 global $conn;
 
+$tipo = $_SESSION["tipo"];
+
+if($tipo == CLIENTE || empty($tipo)){
+    echo "<script>window.alert('Nao tem autorização para entrar aqui!') ; window.location.href = 'paginaPrincipal.php';</script>";
+}
+
+
 try{
     $alterado = false;
     $curso = isset($_GET["curso"])? 1: 0;
@@ -11,9 +18,7 @@ try{
     $user = $_SESSION["user"];
     $tipo = $_SESSION["tipo"];
 
-    if(empty($tipo)){
-        echo "<script>window.alert('Nao tem autorização para entrar aqui!') ; window.location.href = 'paginaPrincipal.php';</script>";
-    }
+
 
 
 }catch(Exception $e){
