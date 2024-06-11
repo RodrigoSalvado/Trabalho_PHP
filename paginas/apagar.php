@@ -4,6 +4,13 @@ include "../basedados/basedados.h";
 include "./ConstUtilizadores.php";
 
 
+$tipo = $_SESSION["tipo"];
+
+if($tipo != ADMINISTRADOR || empty($tipo)){
+    echo "<script>window.alert('Nao tem autorização para entrar aqui') ; window.location.href = 'paginaPrincipal.php';</script>";
+}
+
+
 $user = isset($_GET["user"])? $_GET["user"]:Null;
 $curso = isset($_GET["curso"])? $_GET["curso"]:Null;
 
@@ -54,8 +61,10 @@ if(isset($user)){
 
         if(isset($id_curso)){
             echo "<script>window.alert('Utilizador ".$user." Apagado') ; window.location.href = 'gerirDados.php?curso=1&id_curso=$id_curso';</script>";
+        }else{
+            echo "<script>window.alert('Utilizador ".$user." Apagado') ; window.location.href = 'gestaoUtilizadores.php';</script>";
         }
-        echo "<script>window.alert('Utilizador ".$user." Apagado') ; window.location.href = 'gestaoUtilizadores.php';</script>";
+
     }
 
     if($tipoUtilizador == CLIENTE){
@@ -73,8 +82,7 @@ if(isset($curso)){
     $sql = "DELETE FROM util_curso WHERE curso = '$curso'";
     mysqli_query($conn, $sql);
 
-    echo "<script>alert('Curso ".$curso." Apagado')</script>";
-    echo "<script>window.alert('Cliente ".$user." Apagado') ; window.location.href = 'gestaoCursos.php';</script>";
+    echo "<script>window.alert('Curso ".$curso." Apagado') ; window.location.href = 'gestaoCursos.php';</script>";
 }
 
 

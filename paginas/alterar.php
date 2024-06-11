@@ -9,7 +9,11 @@ try{
     $curso = isset($_GET["curso"])? 1: 0;
     $utilizador = isset($_GET["utilizador"])? 1:0;
     $user = $_SESSION["user"];
+    $tipo = $_SESSION["tipo"];
 
+    if(empty($tipo)){
+        echo "<script>window.alert('Nao tem autorização para entrar aqui!') ; window.location.href = 'paginaPrincipal.php';</script>";
+    }
 
 
 }catch(Exception $e){
@@ -108,7 +112,7 @@ if($utilizador == 1){
     }
 }
 
-if($curso == 1){
+if($curso == 1 && ($tipo == ADMINISTRADOR || $tipo == DOCENTE)){
     $id_curso = $_GET["id_curso"];
 
     $sql = "SELECT * FROM curso WHERE id_curso = '$id_curso'";
@@ -129,16 +133,16 @@ if($curso == 1){
                 $inscritos = $rowInscritos["total"];
             }
 
-            if(isset($_POST["docente"]) && strcmp($_POST["docente"], $docente) != 0){
+            if(isset($_POST["docente"]) && strcmp($_POST["docente"], $docente) != 0 && $tipo == ADMINISTRADOR){
                 $novoDocente = $_POST["docente"];
                 echo $novoDocente."<br>";
             }
-            if(isset($_POST["nome"]) && strcmp($_POST["nome"], $nome) != 0){
+            if(isset($_POST["nome"]) && strcmp($_POST["nome"], $nome) != 0 && $tipo == ADMINISTRADOR){
                 $novoNome = $_POST["nome"];
                 echo $novoNome."<br>";
             }
 
-            if(isset($_POST["descricao"]) && strcmp($_POST["descricao"], $desc) != 0){
+            if(isset($_POST["descricao"]) && strcmp($_POST["descricao"], $desc) != 0 && $tipo == ADMINISTRADOR){
                 $novaDesc = $_POST["descricao"];
                 echo $novaDesc."<br>";
             }
@@ -153,12 +157,12 @@ if($curso == 1){
 
     if(isset($_POST["botao"])){
 
-        if(isset($novoDocente)){
+        if(isset($novoDocente) && $tipo == ADMINISTRADOR){
             $sql = "UPDATE curso SET docente = '$novoDocente' WHERE id_curso = '$id_curso'";
             mysqli_query($conn, $sql);
             $alterado = true;
         }
-        if(isset($novoNome)){
+        if(isset($novoNome) && $tipo == ADMINISTRADOR){
             $sqlCount = "SELECT nome FROM curso WHERE nome = '$novoNome'";
             $resultCount = mysqli_query($conn, $sqlCount);
 
@@ -175,7 +179,7 @@ if($curso == 1){
             }
 
         }
-        if(isset($novaDesc)){
+        if(isset($novaDesc) && $tipo == ADMINISTRADOR){
             $sqlCount = "SELECT descricao FROM curso WHERE descricao = '$novaDesc'";
             $resultCount = mysqli_query($conn, $sqlCount);
 

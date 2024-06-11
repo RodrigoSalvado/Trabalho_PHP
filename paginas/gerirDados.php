@@ -20,17 +20,7 @@ try{
 }
 
 if($utilizador==1){
-    //se for o proprio utilizador a aceder a pagina
-    if(isset($_SESSION["user"])){
-        $username = $_SESSION["user"];
-        $sqlS = "SELECT email FROM utilizador WHERE username = '$username'";
-        $resultS = mysqli_query($conn, $sqlS);
 
-        if ($resultS && mysqli_num_rows($resultS) > 0) {
-            $row = mysqli_fetch_assoc($resultS);
-            $email = $row["email"];
-        }
-    }
 
     //se for o admin a aceder aos dados do utilizador
     if(isset($_GET["id"])){

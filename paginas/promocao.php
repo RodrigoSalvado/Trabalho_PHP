@@ -18,6 +18,7 @@ if($promover == 1){
     switch ($tipoUtilizador){
         case ADMINISTRADOR:
             echo "<script>alert('Este utilizador já tem o cargo máximo!')</script>";
+            header("Location: gestaoUtilizadores.php");
             break;
 
         case DOCENTE:
@@ -59,6 +60,7 @@ if($promover == 1){
 
         case ALUNO:
             echo "<script>alert('Este utilizador já tem o cargo minimo!')</script>";
+            header("Location: gestaoUtilizadores.php");
             break;
     }
 }
