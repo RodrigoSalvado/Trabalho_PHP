@@ -2,6 +2,14 @@
 global $conn;
 include "../basedados/basedados.h";
 
+session_start();
+$tipo = $_SESSION["tipo"];
+
+
+if($tipo != ADMINISTRADOR || $tipo != DOCENTE || empty($tipo)){
+    echo "<script>window.alert('Nao tem autorização para entrar aqui') ; window.location.href = 'paginaPrincipal.php';</script>";
+}
+
 try{
     $id = $_GET["id"];
     $validado = $_GET["validar"];

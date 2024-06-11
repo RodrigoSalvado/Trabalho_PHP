@@ -3,6 +3,11 @@ include "../basedados/basedados.h";
 global $conn;
 session_start();
 
+$tipo = $_SESSION["tipo"];
+if($tipo == CLIENTE || empty($tipo)){
+    echo "<script>window.alert('Nao tem autorização para entrar aqui') ; window.location.href = 'paginaPrincipal.php';</script>";
+}
+
 $user = $_SESSION["user"] ;
 
 $nomeCurso = $_POST['nome'];

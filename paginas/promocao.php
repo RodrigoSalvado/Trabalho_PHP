@@ -3,6 +3,11 @@ global $conn;
 include "../basedados/basedados.h";
 include "./ConstUtilizadores.php";
 
+$tipo = $_SESSION["tipo"];
+if($tipo != ADMINISTRADOR || empty($tipo)){
+    echo "<script>window.alert('Nao tem autorização para entrar aqui') ; window.location.href = 'paginaPrincipal.php';</script>";
+}
+
 $promover = $_GET["promover"];
 $id = $_GET["id"];
 
