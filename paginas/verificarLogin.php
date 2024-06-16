@@ -12,7 +12,7 @@ if(isset($_POST["user"]) && isset($_POST["pass"])){
 
     //==================================================================//
     //Selecionar user correspondente da base de dados
-    $sql = "SELECT * FROM utilizador WHERE username = '$utilizador' AND password = '".md5($password)."' AND tipo_utilizador != ".APAGADO.";";
+    $sql = "SELECT * FROM utilizador WHERE username = '$utilizador' AND password = '".$password."' AND tipo_utilizador != ".APAGADO.";";
     $retval = mysqli_query( $conn, $sql );
     if(! $retval ){
         die('Could not get data: ' . mysqli_error($conn));// se não funcionar dá erro
@@ -20,7 +20,7 @@ if(isset($_POST["user"]) && isset($_POST["pass"])){
     $row = mysqli_fetch_array($retval);
 
     //==================================================================//
-    if(strcmp($row["username"], $utilizador) == 0 && strcmp($row["password"], md5($password)) == 0){
+    if(strcmp($row["username"], $utilizador) == 0 && strcmp($row["password"], $password) == 0){
         //=========================DADOS VÁLIDOS=========================//
         //Identifica o utilizador
         $_SESSION["user"] = $row["username"];
