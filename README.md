@@ -1,32 +1,32 @@
-📌 Guia de Utilização do Repositório
+📌 Repository Usage Guide
 
-📢 Pré-requisitos
+📢 Prerequisites
 
-Para utilizares este repositório corretamente, deves ter instalado o XAMPP, uma aplicação que inclui o servidor Apache e a base de dados MySQL.
+To use this repository correctly, you must have XAMPP installed, an application that includes the Apache server and MySQL database.
 
-🔹 Download e Instalação do XAMPP
+🔹 Download and Install XAMPP
 
-Faz download do XAMPP através do site oficial: https://www.apachefriends.org/index.html
+Download XAMPP from the official website: https://www.apachefriends.org/index.html
 
-Instala o XAMPP seguindo as instruções do instalador.
+Install XAMPP following the instructions provided by the installer.
 
-🚀 Configuração do Servidor
+🚀 Server Configuration
 
-🔥 Iniciar Apache e MySQL
+🔥 Start Apache and MySQL
 
-Abre o Painel de Controlo do XAMPP.
+Open the XAMPP Control Panel.
 
-Inicia os serviços Apache e MySQL clicando nos botões "Start".
+Start the Apache and MySQL services by clicking the "Start" buttons.
 
-📂 Colocar o Repositório no Diretório Correto
+📂 Place the Repository in the Correct Directory
 
-Para que o Apache possa servir os ficheiros corretamente:
+For Apache to serve the files correctly:
 
-Localiza a pasta de instalação do XAMPP (por defeito: C:\xampp\htdocs no Windows, /opt/lampp/htdocs/ no Linux ou /Applications/XAMPP/htdocs/ no macOS).
+Locate the XAMPP installation folder (default: C:\xampp\htdocs on Windows, /opt/lampp/htdocs/ on Linux, or /Applications/XAMPP/htdocs/ on macOS).
 
-Copia ou clona este repositório para dentro da pasta htdocs.
+Copy or clone this repository into the htdocs folder.
 
-# Exemplo de clonagem via Git
+# Example of cloning via Git
 cd C:\xampp\htdocs   # Windows
 
 cd /opt/lampp/htdocs  # Linux
@@ -35,20 +35,21 @@ cd /Applications/XAMPP/htdocs  # macOS
 
 git clone https://github.com/RodrigoSalvado/Trabalho_PHP.git
 
-🛠️ Importar a Base de Dados
+🛠️ Import the Database
 
-Para importar a base de dados do projeto:
+To import the project database:
 
-Acede ao phpMyAdmin através do navegador: http://localhost/phpmyadmin
+Access phpMyAdmin through your browser: http://localhost/phpmyadmin
 
-Escolhe a opção importar na página inicial, e seleciona o ficheiro basedados/criar_bd.sql
+Select the Import option on the homepage and choose the file basedados/criar_bd.sql.
 
-Carrega em Executar para completar a importação.
+Click Execute to complete the import.
 
-🎯 Aceder ao Projeto
+🎯 Access the Project
 
-Depois de tudo configurado, podes aceder ao projeto através do navegador, indo a:
+Once everything is set up, you can access the project through your browser at:
 
 http://localhost/Trabalho_PHP
 
-Caso tenhas dúvidas ou problemas, verifica se os serviços do XAMPP estão ativos e se a base de dados foi importada corretamente! 🚀
+If you encounter any issues, ensure that the XAMPP services are running and that the database has been imported correctly! 🚀
+
