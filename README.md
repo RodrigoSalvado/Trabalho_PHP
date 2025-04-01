@@ -28,8 +28,11 @@ Copia ou clona este repositório para dentro da pasta htdocs.
 
 # Exemplo de clonagem via Git
 cd C:\xampp\htdocs   # Windows
+
 cd /opt/lampp/htdocs  # Linux
+
 cd /Applications/XAMPP/htdocs  # macOS
+
 git clone https://github.com/RodrigoSalvado/Trabalho_PHP.git
 
 🛠️ Importar a Base de Dados
@@ -38,9 +41,7 @@ Para importar a base de dados do projeto:
 
 Acede ao phpMyAdmin através do navegador: http://localhost/phpmyadmin
 
-Cria uma nova base de dados (o nome deve corresponder ao indicado no teu ficheiro de configuração do projeto, basedados.h).
-
-No separador Importar, seleciona o ficheiro .sql incluído neste repositório.
+Escolhe a opção importar na página inicial, e seleciona o ficheiro basedados/criar_bd.sql
 
 Carrega em Executar para completar a importação.
 
